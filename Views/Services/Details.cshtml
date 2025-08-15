@@ -1,0 +1,70 @@
+@model LeRayBookingSystem.Models.Service
+
+@{
+    ViewData["Title"] = "Service Details";
+}
+
+<h1>Service Details</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <dl class="row">
+            <dt class="col-sm-4">Title</dt>
+            <dd class="col-sm-8">@Model.Title</dd>
+
+            <dt class="col-sm-4">Description</dt>
+            <dd class="col-sm-8">@Model.Description</dd>
+
+            <dt class="col-sm-4">Price</dt>
+            <dd class="col-sm-8">@Model.Price.ToString("C")</dd>
+
+            <dt class="col-sm-4">Duration</dt>
+            <dd class="col-sm-8">@Model.Duration</dd>
+
+            <dt class="col-sm-4">Public Code</dt>
+            <dd class="col-sm-8">@Model.PublicServiceCode</dd>
+
+            <dt class="col-sm-4">Service Name</dt>
+            <dd class="col-sm-8">@Model.ServiceName</dd>
+
+            <dt class="col-sm-4">Category</dt>
+            <dd class="col-sm-8">@Model.Category</dd>
+
+            <dt class="col-sm-4">Created By</dt>
+            <dd class="col-sm-8">@Model.CreatedByUser?.FullName</dd>
+
+            <dt class="col-sm-4">Created At</dt>
+            <dd class="col-sm-8">@Model.CreatedAt.ToString("g")</dd>
+
+            <dt class="col-sm-4">Updated By</dt>
+            <dd class="col-sm-8">@Model.UpdatedByUser?.FullName</dd>
+
+            <dt class="col-sm-4">Last Updated By</dt>
+            <dd class="col-sm-8">@Model.LastUpdatedByUser?.FullName</dd>
+
+            <dt class="col-sm-4">Last Updated At</dt>
+            <dd class="col-sm-8">@Model.LastUpdatedAt.ToString("g")</dd>
+
+            <dt class="col-sm-4">Image</dt>
+            <dd class="col-sm-8">
+                @if (!string.IsNullOrEmpty(Model.ImagePath))
+                {
+                    <img src="@Model.ImagePath" alt="@Model.ServiceName" style="max-width: 200px;" />
+                }
+                else
+                {
+                    <span>No image available</span>
+                }
+            </dd>
+
+            <dt class="col-sm-4">Active</dt>
+            <dd class="col-sm-8">@(Model.IsActive ? "Yes" : "No")</dd>
+        </dl>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

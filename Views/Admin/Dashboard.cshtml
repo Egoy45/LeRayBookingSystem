@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+    var chartData = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.AppointmentsByMonth);
+}
+
+<h1>Admin Dashboard</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5>Total Appointments</h5>
+                <h2>@ViewBag.TotalAppointments</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5>Pending</h5>
+                <h2>@ViewBag.PendingAppointments</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5>Approved</h5>
+                <h2>@ViewBag.ApprovedAppointments</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-danger mb-3">
+            <div class="card-body">
+                <h5>Cancelled</h5>
+                <h2>@ViewBag.CancelledAppointments</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-body">
+        <h5>Monthly Appointments</h5>
+        <canvas id="appointmentsChart"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('appointmentsChart').getContext('2d');
+        var chartData = @Html.Raw(chartData);
+
+        var labels = chartData.map(x => x.Month);
+        var counts = chartData.map(x => x.Count);
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Appointments',
+                    data: counts,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                }]
+            }
+        });
+    </script>
+}

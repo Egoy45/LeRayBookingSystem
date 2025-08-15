@@ -1,0 +1,49 @@
+@model IEnumerable<LeRayBookingSystem.Models.Service>
+
+@{
+    ViewData["Title"] = "Services";
+}
+
+<h1>Services</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Service</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.First().Title)</th>
+            <th>@Html.DisplayNameFor(m => m.First().Description)</th>
+            <th>@Html.DisplayNameFor(m => m.First().Price)</th>
+            <th>@Html.DisplayNameFor(m => m.First().Duration)</th>
+            <th>@Html.DisplayName("Created By")</th>
+            <th>@Html.DisplayNameFor(m => m.First().CreatedAt)</th>
+            <th>@Html.DisplayName("Updated By")</th>
+            <th>@Html.DisplayName("Last Updated By")</th>
+            <th>@Html.DisplayNameFor(m => m.First().IsActive)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Description</td>
+                <td>@item.Price.ToString("C")</td>
+                <td>@item.Duration</td>
+                <td>@item.CreatedByUser?.FullName</td>
+                <td>@item.CreatedAt.ToShortDateString()</td>
+                <td>@item.UpdatedByUser?.FullName</td>
+                <td>@item.LastUpdatedByUser?.FullName</td>
+                <td>@(item.IsActive ? "Yes" : "No")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
