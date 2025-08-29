@@ -1,23 +1,33 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using LeRayBookingSystem.Data;
 using LeRayBookingSystem.Models;
-using LeRayBookingSystem.Services; // ✅ For IEmailService & EmailService
+using LeRayBookingSystem.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ Register Email Service so DI can resolve it
+// ✅ Register Email Service
 builder.Services.AddScoped<IEmailService, EmailService>();
 
-// Add services to the container.
+// Add services
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
+builder.Services.AddRazorPages(); // 👈 required for Identity pages
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
+    ));
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+})
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
+
+builder.Services.Configure<EmailSettings>(
+    builder.Configuration.GetSection("EmailSettings"));
 
 var app = builder.Build();
 
@@ -33,11 +43,8 @@ using (var scope = app.Services.CreateScope())
     {
         if (!await roleManager.RoleExistsAsync(roleName))
         {
-            var result = await roleManager.CreateAsync(new IdentityRole(roleName));
-            if (result.Succeeded)
-                Console.WriteLine($"✅ Role '{roleName}' created.");
-            else
-                Console.WriteLine($"❌ Failed to create role '{roleName}': {string.Join(", ", result.Errors.Select(e => e.Description))}");
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+            Console.WriteLine($"✅ Role '{roleName}' created.");
         }
         else
         {
@@ -45,7 +52,7 @@ using (var scope = app.Services.CreateScope())
         }
     }
 
-    // Get SuperAdmin details from config
+    // SuperAdmin config from appsettings.json
     var superAdminEmail = builder.Configuration["SuperAdmin:Email"];
     var superAdminPassword = builder.Configuration["SuperAdmin:Password"];
     var superAdminFullName = builder.Configuration["SuperAdmin:FullName"];
@@ -70,16 +77,16 @@ using (var scope = app.Services.CreateScope())
                 CreatedAt = DateTime.UtcNow
             };
 
-            var createUser = await userManager.CreateAsync(newSuperAdmin, superAdminPassword ?? "StrongP@ssword123");
+            var result = await userManager.CreateAsync(newSuperAdmin, superAdminPassword ?? "StrongP@ssword123");
 
-            if (createUser.Succeeded)
+            if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(newSuperAdmin, "SuperAdmin");
-                Console.WriteLine($"✅ SuperAdmin account '{superAdminEmail}' created and assigned role.");
+                Console.WriteLine($"✅ SuperAdmin '{superAdminEmail}' created.");
             }
             else
             {
-                Console.WriteLine($"❌ Failed to create SuperAdmin: {string.Join(", ", createUser.Errors.Select(e => e.Description))}");
+                Console.WriteLine($"❌ Failed to create SuperAdmin: {string.Join(", ", result.Errors.Select(e => e.Description))}");
             }
         }
         else
@@ -89,11 +96,11 @@ using (var scope = app.Services.CreateScope())
     }
     else
     {
-        Console.WriteLine("⚠️ SuperAdmin email is not set in appsettings.json.");
+        Console.WriteLine("⚠️ SuperAdmin email not set in appsettings.json");
     }
 }
 
-// Configure the HTTP request pipeline.
+// Middleware
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -108,6 +115,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapRazorPages(); // ✅ works now because AddRazorPages was added
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

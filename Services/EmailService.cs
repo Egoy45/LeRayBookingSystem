@@ -31,11 +31,17 @@ namespace LeRayBookingSystem.Services
             };
 
             using var smtp = new SmtpClient();
+
+            // ⚠️ Bypass SSL certificate validation (testing only!)
+            smtp.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
             await smtp.ConnectAsync(
-                _emailSettings.SmtpServer,
-                _emailSettings.SmtpPort,
-                _emailSettings.UseSSL ? SecureSocketOptions.SslOnConnect : SecureSocketOptions.StartTls
-            );
+     _emailSettings.SmtpServer,
+     _emailSettings.SmtpPort,
+     _emailSettings.SmtpPort == 465
+         ? SecureSocketOptions.SslOnConnect
+         : SecureSocketOptions.StartTls
+ );
 
             await smtp.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
             await smtp.SendAsync(email);
