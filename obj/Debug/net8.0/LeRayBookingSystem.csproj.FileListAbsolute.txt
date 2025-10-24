@@ -581,3 +581,4 @@ C:\Users\supil\source\repos\LeRayBookingSystem-main\obj\Debug\net8.0\refint\LeRa
 C:\Users\supil\source\repos\LeRayBookingSystem-main\obj\Debug\net8.0\LeRayBookingSystem.pdb
 C:\Users\supil\source\repos\LeRayBookingSystem-main\obj\Debug\net8.0\LeRayBookingSystem.genruntimeconfig.cache
 C:\Users\supil\source\repos\LeRayBookingSystem-main\obj\Debug\net8.0\ref\LeRayBookingSystem.dll
+C:\Users\supil\source\repos\LeRayBookingSystem-main\obj\Debug\net8.0\LeRayBookingSystem.sourcelink.json
