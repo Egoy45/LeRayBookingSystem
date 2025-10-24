@@ -1,0 +1,45 @@
+@model IEnumerable<LeRayBookingSystem.Models.Promos>
+
+@{
+    ViewData["Title"] = "Promos";
+}
+
+<h2>Promos</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Promo</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Promo Code</th>
+            <th>Price</th>
+            <th>Duration</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Active</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model ?? Enumerable.Empty<LeRayBookingSystem.Models.Promos>())
+        {
+            <tr>
+                <td>@(item?.Title ?? "N/A")</td>
+                <td>@(item?.PromoCode ?? "N/A")</td>
+                <td>@item?.Price.ToString("C")</td>
+                <td>@item?.Duration</td>
+                <td>@item?.StartDate.ToShortDateString()</td>
+                <td>@item?.EndDate.ToShortDateString()</td>
+                <td>@(item?.IsActive == true ? "Yes" : "No")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item?.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item?.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item?.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeRay Booking</title>
+  <link rel="stylesheet" href="../css/Booking.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+</head>
+
+<body>
+  <div class="booking-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <ul class="steps">
+        <li class="active" data-step="1">Service Selection</li>
+        <li data-step="2">Date & Time</li>
+        <li data-step="3">Confirmation</li>
+        <li data-step="4">Payment</li>
+      </ul>
+    </aside>
+
+    <!-- ===== STEP 1: SERVICE SELECTION ===== -->
+    <main class="main-content step active" data-step="1">
+      <h2>Service Selection</h2>
+
+      <label for="service-select"><strong>*Service:</strong></label>
+      <select id="service-select">
+        <option value="">Select Service</option>
+        <option value="bundle-laser">Bundle (Laser)</option>
+        <option value="bundle-facial">Bundle (Facial)</option>
+        <option value="skin-treatment">Skin Treatment</option>
+        <option value="laser-hair">SHR/IPL (Laser Hair Removal)</option>
+        <option value="laser-treatment">Laser Treatment</option>
+        <option value="whitening">Whitening/Anti-Aging</option>
+      </select>
+
+      <div class="service-grid">
+        <div class="category" data-category="bundle-laser">
+          <div class="category-header">
+            <span>Bundle (Laser)</span>
+            <input type="checkbox" />
+          </div>
+          <ol>
+            <li>Deep Cleaning Facial</li>
+            <li>Pico Laser (Any Body Parts)</li>
+            <li>PDT Light Treatment</li>
+          </ol>
+        </div>
+
+        <div class="category" data-category="bundle-facial">
+          <div class="category-header">
+            <span>Bundle (Facial)</span>
+            <input type="checkbox" />
+          </div>
+          <ol>
+            <li>Hydrafacial</li>
+            <li>Oxygen Facial</li>
+            <li>Rejuvenating Mask</li>
+          </ol>
+        </div>
+
+        <div class="category" data-category="skin-treatment">
+          <div class="category-header">
+            <span>Skin Treatment</span>
+            <input type="checkbox" />
+          </div>
+          <ol>
+            <li>Acne Treatment</li>
+            <li>Scar Reduction</li>
+            <li>Glow Peel</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn continue-btn" id="continue1">Continue</button>
+      </div>
+    </main>
+
+    <!-- ===== STEP 2: DATE & TIME ===== -->
+    <main class="main-content step" data-step="2">
+      <h2>Date & Time</h2>
+
+      <label for="date-picker"><strong>*Select Date:</strong></label>
+      <input type="text" id="date-picker" placeholder="MM/DD/YYYY" readonly />
+
+      <div class="time-layout">
+        <div class="calendar-box" id="calendar"></div>
+        <div class="timeslot-box">
+          <h3>Available Time Slots</h3>
+          <div class="timeslots">
+            <button>11:00 AM - 12:00 PM</button>
+            <button>11:30 AM - 12:30 PM</button>
+            <button>12:00 PM - 1:00 PM</button>
+            <button>12:30 PM - 1:30 PM</button>
+            <button>1:00 PM - 2:00 PM</button>
+            <button>1:30 PM - 2:30 PM</button>
+            <button>2:00 PM - 3:00 PM</button>
+            <button>2:30 PM - 3:30 PM</button>
+            <button>3:00 PM - 4:00 PM</button>
+            <button>4:00 PM - 5:00 PM</button>
+            <button>5:00 PM - 6:00 PM</button>
+            <button>6:00 PM - 7:00 PM</button>
+            <button>7:00 PM - 8:00 PM</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn back-btn" id="back2">Back</button>
+        <button class="btn continue-btn" id="continue2">Continue</button>
+      </div>
+    </main>
+
+    <!-- ===== STEP 3: CONFIRMATION ===== -->
+    <main class="main-content step" data-step="3">
+      <h2>Confirmation</h2>
+      <div class="confirmation-card">
+        <div class="confirmation-header">
+          <img src="https://cdn-icons-png.flaticon.com/512/3159/3159066.png" alt="confetti" class="confetti-icon" />
+          <h3>Congratulations</h3>
+          <p>Appointment ID #4675</p>
+        </div>
+
+        <div class="confirmation-body">
+          <p><strong>Date:</strong> <span id="confirm-date">—</span></p>
+          <p><strong>Time:</strong> <span id="confirm-time">—</span></p>
+          <p><strong>Service:</strong> <span id="confirm-service">—</span></p>
+          <ul>
+            <li>Deep Cleaning Facial</li>
+            <li>Pico Laser</li>
+            <li>PDT Light Treatment</li>
+          </ul>
+          <p><strong>Location:</strong> 999 JP Rizal Street, Concepcion Uno, Marikina City</p>
+          <p><strong>Price:</strong> Php 1,899</p>
+          <p><strong>Down payment:</strong> Php 400</p>
+          <hr />
+          <p class="note">
+            Note: The downpayment is 20% of the total service amount. The remaining balance will be settled on the appointment day.
+          </p>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn back-btn" id="back3">Back</button>
+        <button class="btn continue-btn" id="continue3">Continue</button>
+      </div>
+    </main>
+
+    <!-- ===== STEP 4: PAYMENT ===== -->
+    <main class="main-content step" data-step="4">
+      <h2>Payment</h2>
+
+      <div class="payment-container">
+        <p>Upload a clear photo or screenshot of your payment receipt.</p>
+
+        <div class="payment-details">
+          <p><strong>Date:</strong> <span id="payment-date">—</span></p>
+          <p><strong>Time:</strong> <span id="payment-time">—</span></p>
+          <p><strong>Service:</strong> <span id="payment-service">—</span></p>
+          <p><strong>Location:</strong> 999 JP Rizal Street, Concepcion Uno, Marikina City</p>
+          <p><strong>Price:</strong> Php 1,899</p>
+          <p><strong>Down payment:</strong> Php 400</p>
+          <p class="note">Please pay the 20% downpayment via GCash or PayMaya.</p>
+        </div>
+
+        <div class="payment-info">
+          <p><strong>GCash Account:</strong> 0912-345-6789 (LeRay)</p>
+          <p><strong>PayMaya Account:</strong> 0998-765-4321 (LeRay)</p>
+        </div>
+
+        <div class="upload-section">
+          <label for="receipt" class="upload-btn">Upload Receipt</label>
+          <input type="file" id="receipt" accept=".jpg,.jpeg,.png" hidden />
+          <p class="file-note">Only .jpg, .jpeg, .png files | Max 5MB</p>
+        </div>
+
+        <div class="nav-buttons">
+          <button class="btn back-btn" id="back4">Back</button>
+          <button class="btn confirm-btn" id="finish">Finish</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="/LeRayBookingSystem-main/wwwroot/js/Booking.js"></script>
+</body>
+</html>

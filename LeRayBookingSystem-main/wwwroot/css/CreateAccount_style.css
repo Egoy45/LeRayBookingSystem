@@ -1,0 +1,121 @@
+/* ===== Basic Layout ===== */
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #fffdfd;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* ===== Navigation Bar ===== */
+  header {
+    background-color: #fdfafa;
+    padding: 10px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .book-now {
+    background-color: white;
+    border: 1px solid #aaa;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .book-now:hover {
+    background-color: #c2a574;
+    color: white;
+  }
+  
+  /* ===== Modal Styling ===== */
+  .modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+  }
+  
+  .modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    text-align: center;
+    position: relative;
+  }
+  
+  .close {
+    position: absolute;
+    top: 10px; right: 15px;
+    font-size: 24px;
+    color: #555;
+    cursor: pointer;
+  }
+  
+  h2 {
+    font-family: "Georgia", serif;
+    color: #3e2c19;
+    margin-bottom: 20px;
+  }
+  
+  /* ===== Form Styling ===== */
+  .form-row {
+    display: flex;
+    gap: 10px;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .signup-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background-color: #3e2c19;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .signup-btn:hover {
+    background-color: #c2a574;
+  }
+  
+  .terms {
+    font-size: 12px;
+    color: #555;
+  }
+  
+  .login-text {
+    font-size: 13px;
+    margin-top: 10px;
+  }
+  
+  .login-text a {
+    color: #c2a574;
+    text-decoration: none;
+  }

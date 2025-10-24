@@ -1,0 +1,45 @@
+@model LeRayBookingSystem.Models.Promos
+
+@{
+    ViewData["Title"] = "Promo Details";
+}
+
+<h2>Promo Details</h2>
+
+<div>
+    <h4>@Model?.Title</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Description</dt>
+        <dd class="col-sm-10">@Model?.Description</dd>
+
+        <dt class="col-sm-2">Price</dt>
+        <dd class="col-sm-10">@Model?.Price.ToString("C")</dd>
+
+        <dt class="col-sm-2">Duration</dt>
+        <dd class="col-sm-10">@Model?.Duration</dd>
+
+        <dt class="col-sm-2">Promo Code</dt>
+        <dd class="col-sm-10">@Model?.PromoCode</dd>
+
+        <dt class="col-sm-2">Start Date</dt>
+        <dd class="col-sm-10">@Model?.StartDate.ToShortDateString()</dd>
+
+        <dt class="col-sm-2">End Date</dt>
+        <dd class="col-sm-10">@Model?.EndDate.ToShortDateString()</dd>
+
+        <dt class="col-sm-2">Active</dt>
+        <dd class="col-sm-10">@((Model?.IsActive ?? false) ? "Yes" : "No")</dd>
+
+        <dt class="col-sm-2">Created By</dt>
+        <dd class="col-sm-10">@Model?.CreatedBy</dd>
+
+        <dt class="col-sm-2">Created At</dt>
+        <dd class="col-sm-10">@Model?.CreatedAt</dd>
+    </dl>
+</div>
+
+<p>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a> |
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</p>

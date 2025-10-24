@@ -1,0 +1,389 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Le'Ray — Aesthetic and Wellness Center</title>
+
+  <!-- Font Awesome & CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/CreateAccount_style.css" />
+  <link rel="stylesheet" href="../css/LogIn__style.css" />
+  <link rel="stylesheet" href="../css/about_style.css" />
+  <link rel="stylesheet" href="../css/Booking.css" />
+  <link rel="stylesheet" href="../css/ComboBundle_style.css" />
+</head>
+
+<body>
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="container topbar" role="banner">
+      <div class="brand" aria-label="LeRay brand">
+        <div class="logo" aria-hidden="true">LE'RAY</div>
+        <div>
+          <h1>Le'Ray</h1>
+          <p>Aesthetic & Wellness</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav aria-label="Main navigation">
+        <ul class="nav-list" role="menubar">
+          <li><a href="Index.html" role="menuitem">HOME</a></li>
+          <li class="dropdown" aria-haspopup="true">
+            <div class="dropdown-toggle" tabindex="0" id="servicesToggle" aria-expanded="false">
+              <span>SERVICES ▾</span>
+            </div>
+            <div class="dropdown-menu" role="menu" aria-labelledby="servicesToggle">
+              <a href="ServicesBooking/facial.html" role="menuitem">FACIAL</a>
+              <a href="ServicesBooking/LaserHairRemoval.html" role="menuitem">LASER</a>
+              <a href="ServicesBooking/SkinTreatment.html" role="menuitem">SKIN TREATMENT</a>
+              <a href="ServicesBooking/Spa.html" role="menuitem">SPA</a>
+            </div>
+          </li>
+          <li><a href="About.html" role="menuitem">ABOUT</a></li>
+          <li><a href="ContactUs.html" role="menuitem">CONTACT US</a></li>
+        </ul>
+      </nav>
+
+      <!-- Utilities -->
+      <div class="utils">
+        <a href="https://www.facebook.com/login" target="_blank" title="Facebook" aria-label="Facebook">
+          <button class="icon-btn facebook"><i class="fab fa-facebook-f"></i></button>
+        </a>
+        <a href="https://www.instagram.com/accounts/login/" target="_blank" title="Instagram" aria-label="Instagram">
+          <button class="icon-btn instagram"><i class="fab fa-instagram"></i></button>
+        </a>
+        <!-- Account Icon in Navbar -->
+<button id="openSidebar" class="icon-btn" title="Account">
+  <i class="fa fa-user"></i>
+</button>
+
+<!-- Overlay (click outside to close) -->
+<div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+<!-- Account Sidebar -->
+<div id="sidebar" class="sidebar">
+  <button id="closeSidebar" class="close-btn">&times;</button>
+
+  <div class="profile-section">
+    <img src="../images/default-profile.png" alt="Profile" class="profile-pic">
+    <h3 class="user-name">NAME</h3>
+    <a href="#" class="edit-profile-link">Edit Profile</a>
+  </div>
+
+  <ul class="sidebar-menu">
+    <li><a href="#">Client History</a></li>
+    <li><a href="#">Reschedule</a></li>
+    <li><a href="#">Loyalty Progress</a></li>
+  </ul>
+</div>
+        <button class="book-btn" id="bookNowBtn">BOOK NOW</button>
+      </div>
+    </div>
+  </header>
+<!-- SIGN UP MODAL -->
+<div id="signupModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Create a new account</h2>
+
+    <form id="signupForm">
+      <div class="form-group">
+        <input type="text" placeholder="First name" required>
+        <input type="text" placeholder="Last name" required>
+      </div>
+
+      <input type="email" placeholder="Mobile number or email" required>
+
+      <div class="password-container">
+        <input type="password" id="password" placeholder="Password" required>
+        <span class="toggle-password" onclick="togglePassword('password', this)">
+          <i class="fa-solid fa-eye"></i>
+        </span>
+      </div>
+      
+      <div class="password-container">
+        <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+        <span class="toggle-password" onclick="togglePassword('confirmPassword', this)">
+          <i class="fa-solid fa-eye"></i>
+        </span>
+      </div>
+
+      <p class="terms">
+        By clicking Sign Up, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+      </p>
+
+      <button type="submit" class="signup-btn">Sign Up</button>
+      <p class="login-link">
+        Already have an account? <a href="#" id="openLogin">Log In</a>
+      </p>
+    </form>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="modal">
+  <div class="modal-content login-box">
+    <button id="backToSignup" class="back-btn" title="Back to Sign Up">←</button>
+    <span class="close-login" title="Close">&times;</span>
+    <h2>Welcome Back!</h2>
+
+    <form id="loginForm">
+      <label for="login-username">Username / Mobile number / Email</label>
+      <input id="login-username" type="text" placeholder="Enter your account" required>
+
+      <div class="password-container">
+        <input id="login-password" type="password" placeholder="Enter your password" required>
+        <span class="toggle-password" onclick="togglePassword('login-password', this)">
+          <i class="fa-solid fa-eye"></i>
+        </span>
+      </div>      
+
+      <button type="submit" class="btn">Log In</button>
+
+      <div class="divider">
+        <span>or continue with</span>
+      </div>
+
+      <div class="social-login">
+        <button class="social-btn google">
+          <i class="fa-brands fa-google"></i> Continue with Google
+        </button>
+        <button class="social-btn facebook">
+          <i class="fa-brands fa-facebook-f"></i> Continue with Facebook
+        </button>
+        <button class="social-btn instagram">
+          <i class="fa-brands fa-instagram"></i> Continue with Instagram
+        </button>
+      </div>
+
+      <p class="switch-text">
+        Forgot account? <a href="#" id="openSignup">Sign up</a>
+      </p>
+    </form>
+  </div>
+</div>
+
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="container" role="main">
+
+    <!-- HERO -->
+    <section class="hero" aria-label="LeRay hero banner">
+      <img src="../Images/LerayImages/BackgroundLeray.PNG" alt="LeRay Aesthetic and Wellness Center Background">
+    </section>
+
+    <!-- GALLERY -->
+    <section class="hero-carousel">
+      <div class="carousel-slide active" style="background-image: url('../Images/LerayImages/Service1.jpg');"></div>
+      <div class="carousel-slide" style="background-image: url('../Images/LerayImages/Services2.jpg');"></div>
+      <div class="carousel-slide" style="background-image: url('../Images/LerayImages/Services3.jpg');"></div>
+      <div class="carousel-slide" style="background-image: url('../Images/LerayImages/Services4.jpg');"></div>
+
+      <!-- Navigation -->
+      <button class="carousel-control prev">&#10094;</button>
+      <button class="carousel-control next">&#10095;</button>
+
+      <!-- Dots -->
+      <div class="dots">
+        <span class="active"></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services-section container">
+      <h2 class="section-title">SERVICES</h2>
+      <div class="underline"></div>
+
+      <div class="services-grid">
+        <div class="service-card" onclick="window.location.href='facial.html'">
+          <img src="LerayServices/Facial.jpg" alt="Facial">
+          <p>FACIAL</p>
+        </div>
+        <div class="service-card" onclick="window.location.href='Slimming.html'">
+          <img src="LerayServices/Slimming.jpg" alt="Slimming">
+          <p>SLIMMING</p>
+        </div>
+        <div class="service-card" onclick="window.location.href='SkinTreatment.html'">
+          <img src="LerayServices/Skin-Treatment.jpg" alt="Skin Treatment">
+          <p>SKIN TREATMENT</p>
+        </div>
+        <div class="service-card" onclick="window.location.href='LaserHairRemoval.html'">
+          <img src="LerayServices/IPL.jpg" alt="Laser Hair Removal">
+          <p>SHR/IPL LASER HAIR REMOVAL</p>
+        </div>
+        <div class="service-card" onclick="window.location.href='laser-treatment.html'">
+          <img src="LerayServices/Laser.jpg" alt="Laser Treatment">
+          <p>LASER TREATMENT</p>
+        </div>
+        <div class="service-card" onclick="window.location.href='whitening.html'">
+          <img src="LerayServices/Whitening.jpg" alt="Whitening">
+          <p>WHITENING/ANTI AGING</p>
+        </div>
+      </div>
+
+      <div class="view-all-wrap">
+        <a href="Services.html" class="view-all-btn">VIEW ALL TREATMENTS</a>
+      </div>
+    </section>
+
+    <!-- COMBO BUNDLES -->
+    <section class="combo-section">
+      <h2 class="section-title">Combo Bundles</h2>
+      <div class="underline"></div>
+
+      <div class="bundle-container">
+        <!-- MICRONEEDLING BUNDLE -->
+        <div class="bundle-card">
+          <h3 class="bundle-title">MICRONEEDLING BUNDLE</h3>
+          <div class="bundle-image">
+            <img src="placeholder.jpg" alt="Microneedling Bundle">
+          </div>
+          <div class="combo">
+            <div class="combo-header"><span>COMBO A</span><span class="price">₱1,899</span></div>
+            <ul>
+              <li>Deep Cleaning Facial</li>
+              <li>Microneedle: Prem. Wrinkle Treatment</li>
+              <li>PDT Light Treatment</li>
+              <li>Gold Mask</li>
+            </ul>
+            <a href="Booking.html" class="book-btn">BOOK NOW</a>
+          </div>
+          <div class="combo">
+            <div class="combo-header"><span>COMBO B</span><span class="price">₱1,899</span></div>
+            <ul>
+              <li>Deep Cleaning Facial</li>
+              <li>Microneedle: Prem. Acne Treatment</li>
+              <li>PDT Light Treatment</li>
+              <li>Gold Mask</li>
+            </ul>
+            <a href="Booking.html" class="book-btn">BOOK NOW</a>
+          </div>
+        </div>
+
+        <!-- LASER BUNDLE -->
+        <div class="bundle-card">
+          <h3 class="bundle-title">LASER BUNDLE</h3>
+          <div class="bundle-image"><img src="placeholder.jpg" alt="Laser Bundle"></div>
+          <div class="combo">
+            <div class="combo-header"><span>COMBO C</span><span class="price">₱1,899</span></div>
+            <ul>
+              <li>Deep Cleaning Facial</li>
+              <li>Pico Laser (Any Body Parts)</li>
+              <li>PDT Light Treatment</li>
+            </ul>
+            <a href="Booking.html" class="book-btn">BOOK NOW</a>
+          </div>
+          <div class="combo">
+            <div class="combo-header"><span>COMBO D</span><span class="price">₱1,899</span></div>
+            <ul>
+              <li>Deep Cleaning Facial</li>
+              <li>Carbon Laser (Any Body Parts)</li>
+              <li>PDT Light Treatment</li>
+            </ul>
+            <a href="Booking.html" class="book-btn">BOOK NOW</a>
+          </div>
+        </div>
+
+        <!-- BEAUTY BUNDLE -->
+        <div class="bundle-card">
+          <h3 class="bundle-title">BEAUTY BUNDLE</h3>
+          <div class="bundle-image"><img src="placeholder.jpg" alt="Beauty Bundle"></div>
+          <div class="combo">
+            <div class="combo-header"><span>COMBO E</span><span class="price">₱1,899</span></div>
+            <ul>
+              <li>Deep Cleaning Facial</li>
+              <li>Microneedling: Le’Ray Micro-Whitening</li>
+              <li>PDT Light Treatment</li>
+            </ul>
+            <a href="Booking.html" class="book-btn">BOOK NOW</a>
+          </div>
+          <div class="combo">
+            <div class="combo-header"><span>COMBO F</span><span class="price">₱1,899</span></div>
+            <ul>
+              <li>Deep Cleaning Facial</li>
+              <li>Microneedling: Le’Ray Micro-Acne</li>
+              <li>PDT Light Treatment</li>
+            </ul>
+            <a href="Booking.html" class="book-btn">BOOK NOW</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIAL -->
+    <section class="testimonial">
+      <div class="testimonial-container">
+        <button class="arrow" id="prevBtn">‹</button>
+        <div class="testimonial-box">
+          <h3>Client’s name</h3>
+          <p class="quote">
+            "I have always had a wonderful experience. The receptionists at Le’Ray are warm and welcoming,
+            and the professionals are incredibly knowledgeable when it comes to skincare and wellness. 
+            They offer helpful advice tailored to my needs. I’ve recommended Le’Ray to friends, and they’ve all had 
+            the same amazing experience. Great job, Le’Ray Aesthetic and Wellness Center!"
+          </p>
+          <div class="stars">★★★★★</div>
+        </div>
+        <button class="arrow" id="nextBtn">›</button>
+      </div>
+
+      <div class="dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+
+      <div class="contact-button">
+        <button class="contact-btn" onclick="window.location.href='ContactUs.html'">CONTACT US</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-logo">
+        <img src="../Images/LerayImages/BackgroundLeray.PNG" alt="LeRay Logo">
+        <p>At Le’Ray Aesthetic we believe in the transformative power of self-care and the harmonious integration of aesthetic. 
+        Our center is a sanctuary dedicated to supporting you to be your most radiant self.</p>
+      </div>
+
+      <div class="footer-nav">
+        <h4>NAVIGATION</h4>
+        <p><a href="#">SERVICES</a></p>
+        <p><a href="#">ABOUT</a></p>
+        <p><a href="#">CONTACT US</a></p>
+      </div>
+
+      <div class="footer-branch">
+        <h4>BRANCH</h4>
+        <p>Le’Ray Aesthetic and Wellness Center is located at 939 J.P. Rizal Street, Concepcion Uno, Marikina City. 
+        Visit us on the 2nd floor of Gendaiya’s Place.</p>
+      </div>
+
+      <div class="footer-contact">
+        <h4>CONTACT</h4>
+        <p>lerayaestheticandwellness@gmail.com</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      © 2025 <strong>Le'Ray Aesthetic and Wellness Center</strong> — All Rights Reserved.
+    </div>
+  </footer>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="../js/script.js"></script>
+  <script src="../js/LogIn_script.js"></script>
+  <script src="../js/Booking.js"></script>
+  <script src="../js/ComboBundle.js"></script>
+</body>
+</html>
+

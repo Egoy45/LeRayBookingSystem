@@ -1,0 +1,76 @@
+@model IEnumerable<LeRayBookingSystem.ViewModels.ApplicationUserViewModel>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h1 class="mb-3">Users</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+
+<table class="table table-bordered table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.First().FullName)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Gender)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Address)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Bio)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Occupation)</th>
+            <th>@Html.DisplayNameFor(model => model.First().SocialMediaLinks)</th>
+            <th>@Html.DisplayNameFor(model => model.First().ProfilePictureUrl)</th>
+            <th>@Html.DisplayNameFor(model => model.First().ProfilePictureThumbnailUrl)</th>
+            <th>@Html.DisplayNameFor(model => model.First().DateJoined)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(item.FullName ?? "N/A")</td>
+                <td>@(item.Gender ?? "N/A")</td>
+                <td>@(item.Address ?? "N/A")</td>
+                <td>@(item.Bio ?? "N/A")</td>
+                <td>@(item.Occupation ?? "N/A")</td>
+                <td>
+                    @if (!string.IsNullOrWhiteSpace(item.SocialMediaLinks))
+                    {
+                        <a href="@item.SocialMediaLinks" target="_blank">@item.SocialMediaLinks</a>
+                    }
+                    else
+                    {
+                        @:N/A
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrWhiteSpace(item.ProfilePictureUrl))
+                    {
+                        <img src="@item.ProfilePictureUrl" alt="Profile Picture" width="60" height="60" class="rounded" />
+                    }
+                    else
+                    {
+                        @:N/A
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrWhiteSpace(item.ProfilePictureThumbnailUrl))
+                    {
+                        <img src="@item.ProfilePictureThumbnailUrl" alt="Thumbnail" width="40" height="40" class="rounded" />
+                    }
+                    else
+                    {
+                        @:N/A
+                    }
+                </td>
+                <td>@item.DateJoined.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

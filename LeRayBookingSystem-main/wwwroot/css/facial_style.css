@@ -1,0 +1,96 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9f6f3;
+    margin: 0;
+    padding: 0;
+    color: #3d2f25;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centers content horizontally */
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 28px;
+    color: #6b4b2e;
+    text-transform: uppercase;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #bfa06f;
+    display: inline-block;
+    padding-bottom: 8px;
+  }
+  
+  .back-btn {
+    text-decoration: none;
+    color: #6b4b2e;
+    font-weight: bold;
+    font-size: 18px;
+    display: inline-block;
+    margin-top: 20px;
+    align-self: flex-start;
+    margin-left: 40px;
+  }
+  
+  .facial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    justify-items: center; /* centers cards inside each grid cell */
+    max-width: 1200px; /* keeps grid from stretching too wide */
+    width: 100%;
+    margin-bottom: 60px;
+  }
+  
+  .facial-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 250px;
+  }
+  
+  .facial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+  }
+  
+  .price {
+    color: #bfa06f;
+    font-weight: bold;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  h3 {
+    color: #4b3724;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 13px;
+    color: #5c4a3a;
+    margin-bottom: 15px;
+    line-height: 1.5;
+  }
+  
+  .book-btn {
+    background-color: #bfa06f;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+  }
+  
+  .book-btn:hover {
+    background-color: #8a6b49;
+  }
+  
