@@ -1,0 +1,40 @@
+﻿@model IEnumerable<LeRayBookingSystem.Models.AdminNotification>
+@{
+    ViewData["Title"] = "Admin Notifications";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Message</th>
+            <th>Created At</th>
+            <th>Read?</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var notification in Model)
+        {
+            <tr class="@(notification.IsRead ? "" : "table-warning")">
+                <td>@notification.Message</td>
+                <td>@notification.CreatedAt.ToLocalTime()</td>
+                <td>@(notification.IsRead ? "Yes" : "No")</td>
+                <td>
+                    @if (!notification.IsRead)
+                    {
+                        <form asp-action="MarkAsRead" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@notification.Id" />
+                            <button type="submit" class="btn btn-sm btn-success">Mark as Read</button>
+                        </form>
+                    }
+                    <form asp-action="Delete" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@notification.Id" />
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

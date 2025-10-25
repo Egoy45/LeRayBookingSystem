@@ -1,0 +1,149 @@
+@model LeRayBookingSystem.Models.Promos
+
+@{
+    ViewData["Title"] = "Create Promo";
+}
+
+<<<<<<< HEAD
+<h2>Create Promo</h2>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Title" class="control-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price" class="control-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Duration" class="control-label"></label>
+        <input asp-for="Duration" class="form-control" />
+        <span asp-validation-for="Duration" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PromoCode" class="control-label"></label>
+        <input asp-for="PromoCode" class="form-control" />
+        <span asp-validation-for="PromoCode" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StartDate" class="control-label"></label>
+        <input asp-for="StartDate" class="form-control" type="date" />
+        <span asp-validation-for="StartDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EndDate" class="control-label"></label>
+        <input asp-for="EndDate" class="form-control" type="date" />
+        <span asp-validation-for="EndDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group form-check">
+        <input asp-for="IsActive" class="form-check-input" />
+        <label asp-for="IsActive" class="form-check-label"></label>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CreatedBy" class="control-label"></label>
+        <input asp-for="CreatedBy" class="form-control" />
+        <span asp-validation-for="CreatedBy" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button> |
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</form>
+=======
+<h2 class="mb-4">Create New Promo</h2>
+
+<form asp-action="Create" asp-controller="Promos" method="post" class="needs-validation" novalidate>
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control" placeholder="Enter promo title" />
+            <div class="text-danger">
+                <span asp-validation-for="Title"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="PromoCode" class="form-label"></label>
+            <input asp-for="PromoCode" class="form-control" placeholder="Enter promo code" />
+            <div class="text-danger">
+                <span asp-validation-for="PromoCode"></span>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter description"></textarea>
+            <div class="text-danger">
+                <span asp-validation-for="Description"></span>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Price" class="form-label"></label>
+            <input asp-for="Price" class="form-control" placeholder="0.00" />
+            <div class="text-danger">
+                <span asp-validation-for="Price"></span>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Duration" class="form-label"></label>
+            <input asp-for="Duration" class="form-control" type="time" step="1" />
+            <div class="text-danger">
+                <span asp-validation-for="Duration"></span>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="IsActive" class="form-check-label mt-2"></label>
+            <div class="form-check">
+                <input asp-for="IsActive" class="form-check-input" />
+            </div>
+            <div class="text-danger">
+                <span asp-validation-for="IsActive"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="StartDate" class="form-label"></label>
+            <input asp-for="StartDate" class="form-control" type="date" />
+            <div class="text-danger">
+                <span asp-validation-for="StartDate"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="EndDate" class="form-label"></label>
+            <input asp-for="EndDate" class="form-control" type="date" />
+            <div class="text-danger">
+                <span asp-validation-for="EndDate"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-success">Save Promo</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+>>>>>>> origin/master
