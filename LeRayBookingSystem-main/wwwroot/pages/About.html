@@ -5,19 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Us | Le'Ray Aesthetic & Wellness Center</title>
 
-  <!-- Font Awesome for icons -->
+  <!-- Font Awesome -->
   <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
   />
 
   <!-- External CSS -->
-  <link rel="stylesheet" href="/LeRayBookingSystem-main/wwwroot/css/about_style.css" />
+  <link rel="stylesheet" href="../css/about_style.css" />
 </head>
 <body>
   <!-- HEADER -->
   <header>
     <div class="container topbar" role="banner">
+      <!-- Brand -->
       <div class="brand" aria-label="LeRay brand">
         <div class="logo" aria-hidden="true">LE'RAY</div>
         <div>
@@ -26,30 +26,34 @@
         </div>
       </div>
 
-      <!-- Navigation -->
+      <!-- NAVIGATION -->
       <nav aria-label="Main navigation">
         <ul class="nav-list" role="menubar">
-          <li><a href="Index.html" role="menuitem">HOME</a></li>
+          <li><a href="../pages/Index.html" role="menuitem">HOME</a></li>
 
           <li class="dropdown" aria-haspopup="true">
-            <div class="dropdown-toggle" tabindex="0" id="servicesToggle" aria-expanded="false">
+            <div class="dropdown-toggle" id="servicesToggle" tabindex="0" aria-expanded="false">
               <span>SERVICES ▾</span>
             </div>
-
             <div class="dropdown-menu" role="menu" aria-labelledby="servicesToggle">
-              <a href="ServicesBooking/facial.html" role="menuitem">FACIAL</a>
-              <a href="ServicesBooking/LaserHairRemoval.html" role="menuitem">LASER</a>
-              <a href="ServicesBooking/SkinTreatment.html" role="menuitem">SKIN TREATMENT</a>
-              <a href="ServicesBooking/Spa.html" role="menuitem">SPA</a>
+              <a href="../pages/facial.html" role="menuitem">FACIAL</a>
+              <a href="../pages/LaserTreatment.html" role="menuitem">LASER</a>
+              <a href="../pages/SkinTreatment.html" role="menuitem">SKIN TREATMENT</a>
+              <a href="../pages/Spa.html" role="menuitem">SPA</a>
+              <a href="../pages/Slimming.html" role="menuitem">SLIMMING</a>
+              <a href="../pages/LaserHairRemoval.html" role="menuitem">LASER HAIR REMOVAL</a>
+              <a href="../pages/Eyelash.html" role="menuitem">EYELASH</a>
+              <a href="../pages/MicroNeedling.html" role="menuitem">MICRONEEDLING</a>
+              <a href="../pages/NailCare.html" role="menuitem">NAIL CARE</a>
             </div>
           </li>
 
-          <li><a href="About.html" role="menuitem" class="active">ABOUT</a></li>
-          <li><a href="ContactUs.html" role="menuitem">CONTACT US</a></li>
+          <li><a href="../pages/About.html" class="active" role="menuitem">ABOUT</a></li>
+          <li><a href="../pages/ContactUs.html" role="menuitem">CONTACT US</a></li>
         </ul>
       </nav>
 
-      <!-- Social Icons + Account + Book Now -->
+      <!-- Utilities: Social, Account, Book -->
       <div class="utils">
         <a href="https://www.facebook.com/login" target="_blank" title="Facebook" aria-label="Facebook">
           <button class="icon-btn facebook"><i class="fab fa-facebook-f"></i></button>
@@ -59,41 +63,38 @@
           <button class="icon-btn instagram"><i class="fab fa-instagram"></i></button>
         </a>
 
-        <!-- Account Icon -->
         <button class="icon-btn account" id="accountBtn" title="Your Account" aria-label="Account">
           <i class="fa-solid fa-user-circle"></i>
         </button>
 
-        <!-- Book Now -->
         <button class="book-btn" id="bookNowBtn">BOOK NOW</button>
       </div>
     </div>
   </header>
 
-  <!-- About Section -->
+  <!-- ABOUT SECTION -->
   <section class="about-section">
     <div class="about-container">
       <div class="about-image">
-        <img src="../LerayImages/clinic-interior.jpg" alt="Le'Ray Aesthetic & Wellness Center" />
+        <img src="../Images/LerayImages/Logo.jpg" alt="Le'Ray Aesthetic & Wellness Center" />
       </div>
 
       <div class="about-content">
         <h2>About Le'Ray Aesthetic & Wellness Center</h2>
         <p>
-          Le'Ray Aesthetic & Wellness Center is dedicated to helping our clients
-          feel confident and beautiful in their own skin. We offer a wide range of
-          facial, slimming, and laser treatments performed by experienced professionals
-          in a relaxing and elegant environment.
+          At Le'Ray Aesthetic & Wellness Center, we help clients feel confident and radiant
+          in their natural beauty. Our wide range of facial, slimming, and laser treatments
+          are performed by skilled professionals in a serene, elegant environment.
         </p>
 
         <p>
-          Our mission is to provide high-quality aesthetic and wellness services
-          that enhance your natural beauty while ensuring comfort and satisfaction.
+          Our mission is to deliver personalized, high-quality aesthetic care that
+          enhances your natural glow while ensuring comfort and satisfaction.
         </p>
 
         <p>
-          At Le’Ray, we believe that self-care is not a luxury — it’s a necessity.
-          Visit us and experience rejuvenation that goes beyond the surface.
+          Because at Le’Ray, self-care isn’t a luxury — it’s a vital step toward confidence,
+          balance, and wellness. Visit us and experience rejuvenation that truly goes beyond the surface.
         </p>
 
         <button id="learnMoreBtn">Learn More</button>
@@ -101,55 +102,54 @@
     </div>
   </section>
 
-  <!-- FAQs Section -->
+  <!-- FAQ SECTION -->
   <section class="faq-section">
-    <h2>FAQs</h2>
+    <h2>Frequently Asked Questions</h2>
     <p class="faq-intro">
-      We're here to help. Search our FAQs for answers to anything you might be wondering.
+      Have questions? We’re here to help. Explore our FAQs below for quick answers.
     </p>
 
     <div class="faq-container">
       <div class="faq-item active">
-        <h3 class="faq-question">How can I book an Appointment?</h3>
+        <h3 class="faq-question">How can I book an appointment?</h3>
         <p class="faq-answer">
-          First, if you have no account then create one, then view services, click "Book Now," 
-          select your services, choose a date and time, and confirm your booking. 
-          Finally, proceed to payment/down payment to complete the process.
+          Simply create an account, explore our services, and click “Book Now.”
+          Choose your preferred treatment, date, and time — then confirm with your payment.
         </p>
       </div>
 
       <div class="faq-item">
-        <h3 class="faq-question">What will happen if I'm late for my Appointment?</h3>
+        <h3 class="faq-question">What if I’m late to my appointment?</h3>
         <p class="faq-answer">
-          If you're late, please contact us immediately. Late arrivals may shorten your treatment time 
-          to avoid delays for the next client.
+          Please contact us as soon as possible. Late arrivals may shorten your session
+          to avoid overlapping with the next client’s appointment.
         </p>
       </div>
 
       <div class="faq-item">
-        <h3 class="faq-question">Is there a reschedule fee?</h3>
+        <h3 class="faq-question">Is there a rescheduling fee?</h3>
         <p class="faq-answer">
-          Rescheduling within 24 hours before your appointment may incur a minimal fee. 
-          Contact our staff for assistance.
+          Rescheduling less than 24 hours before your appointment may include a small fee.
+          Contact our staff to assist you with any changes.
         </p>
       </div>
 
       <div class="faq-item">
-        <h3 class="faq-question">Do the store still accept walk-in appointments?</h3>
+        <h3 class="faq-question">Do you accept walk-ins?</h3>
         <p class="faq-answer">
-          Yes, walk-ins are welcome depending on availability. We recommend booking ahead 
-          to secure your preferred time slot.
+          Yes, walk-ins are accepted based on availability. However, we recommend booking in
+          advance to secure your desired schedule.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- FOOTER -->
   <footer class="footer">
     <p>© 2025 Le'Ray Aesthetic & Wellness Center | All Rights Reserved</p>
   </footer>
 
   <!-- External JS -->
-  <script src="/LeRayBookingSystem-main/wwwroot/js/about_script.js"></script>
+  <script src="../js/about_script.js"></script>
 </body>
 </html>

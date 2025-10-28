@@ -1,22 +1,39 @@
-/* ===== Global ===== */
+/* =========================
+   GLOBAL STYLES
+========================= */
+:root {
+  --accent: #8a6b49;
+  --muted: #e9e6e3;
+  --dark: #222;
+  --gold: #bfa06f;
+  --card-radius: 12px;
+  --max-width: 1100px;
+}
+
 body {
   font-family: "Segoe UI", sans-serif;
   background-color: #f8f2ea;
   margin: 0;
+  color: var(--dark);
 }
 
+/* =========================
+   CONTAINER
+========================= */
 .booking-container {
   display: flex;
   flex-wrap: wrap;
-  max-width: 1100px;
+  max-width: var(--max-width);
   margin: 40px auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   background-color: #fff;
-  border-radius: 12px;
+  border-radius: var(--card-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
-/* ===== Sidebar ===== */
+/* =========================
+   SIDEBAR
+========================= */
 .sidebar {
   width: 250px;
   background: #3b3028;
@@ -44,7 +61,9 @@ body {
   color: #000;
 }
 
-/* ===== Main Content ===== */
+/* =========================
+   MAIN CONTENT
+========================= */
 .main-content {
   flex: 1;
   padding: 40px;
@@ -57,46 +76,91 @@ body {
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== Service Grid ===== */
+/* =========================
+   SERVICE SELECTION
+========================= */
 .service-grid {
   margin-top: 20px;
 }
 
+/* === COLLAPSIBLE CATEGORY STYLING === */
 .category {
-  background: #f5f0ea;
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 8px;
+  background-color: #f8f5f1;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
 
 .category-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: var(--accent);
+  color: #fff;
+  padding: 12px 16px;
+  font-weight: bold;
   cursor: pointer;
+  border-radius: 10px 10px 0 0;
+  transition: background-color 0.3s;
+  user-select: none;
 }
 
-.category-list {
-  margin-top: 10px;
-  padding-left: 20px;
-  display: none;
+.category-header:hover {
+  background-color: var(--gold);
 }
 
-.category.open .category-list {
-  display: block;
+.category-header::after {
+  content: "▼";
+  font-size: 0.9em;
+  transition: transform 0.3s ease;
 }
 
-/* ===== Time Grid ===== */
+.category.open .category-header::after {
+  transform: rotate(-180deg);
+}
+
+/* Smooth expand/collapse animation */
+.category ol {
+  max-height: 0;
+  overflow: hidden;
+  background-color: #fff;
+  margin: 0;
+  padding: 0 20px;
+  list-style-position: inside;
+  transition: max-height 0.4s ease;
+}
+
+.category.open ol {
+  max-height: 500px; /* enough to show multiple services */
+  padding: 10px 20px;
+}
+
+.category ol li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.category ol li:hover {
+  background-color: #f0eae3;
+}
+
+.category ol li.selected {
+  background-color: #e8dcc7;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+/* =========================
+   DATE & TIME STEP
+========================= */
 .time-grid {
   margin-top: 20px;
 }
@@ -123,7 +187,9 @@ body {
   color: #000;
 }
 
-/* ===== Navigation Buttons ===== */
+/* =========================
+   NAVIGATION BUTTONS
+========================= */
 .nav-buttons {
   display: flex;
   justify-content: flex-end;
@@ -147,52 +213,9 @@ body {
   color: #000;
 }
 
-/* ===== Fully Booked Modal ===== */
-.fully-booked-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.fully-booked-modal .modal-content {
-  background: #fff7f0;
-  color: #3c2e2e;
-  border-radius: 12px;
-  padding: 2rem;
-  text-align: center;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  width: 300px;
-}
-
-.fully-booked-modal h2 {
-  margin-bottom: 10px;
-  color: #8a6b49;
-  font-weight: bold;
-}
-
-.fully-booked-modal button {
-  background: #8a6b49;
-  color: #fff;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  margin-top: 15px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.fully-booked-modal button:hover {
-  background: #bfa06f;
-}
-
-/* ===== Confirmation Step ===== */
+/* =========================
+   CONFIRMATION STEP
+========================= */
 .confirmation-card {
   background: #3b2e2e;
   color: #fff8f0;
@@ -249,38 +272,13 @@ body {
   line-height: 1.4;
 }
 
-/* ===== Buttons Shared Style ===== */
-.back-btn,
-.confirm-btn {
-  border: none;
-  padding: 10px 25px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
-}
-
-.back-btn {
-  background-color: #cfc7bc;
-  color: #2b2014;
-}
-
-.confirm-btn {
-  background-color: #bfa06f;
-  color: #fff;
-}
-
-.confirm-btn:hover,
-.back-btn:hover {
-  opacity: 0.9;
-}
-
-/* === Payment Step === */
+/* =========================
+   PAYMENT STEP
+========================= */
 .payment-container {
   background-color: #f8f3ed;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 25px 35px;
   color: #2b2014;
   max-width: 600px;
@@ -323,27 +321,28 @@ body {
   text-align: center;
 }
 
-.upload-btn {
-  background-color: #bfa06f;
-  color: #fff;
+.upload-btn,
+.upload-receipt {
   padding: 10px 25px;
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
+  border: none;
+}
+
+.upload-btn {
+  background-color: #bfa06f;
+  color: #fff;
   margin-right: 10px;
 }
 
 .upload-receipt {
   background-color: #3a2b1c;
   color: #fff;
-  border: none;
-  padding: 10px 25px;
-  border-radius: 6px;
-  cursor: pointer;
 }
 
-.upload-receipt:hover,
-.upload-btn:hover {
+.upload-btn:hover,
+.upload-receipt:hover {
   opacity: 0.9;
 }
 
@@ -359,7 +358,18 @@ body {
   margin-top: 30px;
 }
 
-/* === Responsive Design === */
+.selected-service-box {
+  background: #fff7ec;
+  border-left: 5px solid var(--accent);
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  font-weight: 500;
+  color: var(--dark);
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
 @media (max-width: 768px) {
   .booking-container {
     flex-direction: column;

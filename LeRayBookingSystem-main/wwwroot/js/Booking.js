@@ -4,16 +4,89 @@ document.addEventListener("DOMContentLoaded", () => {
   const stepIndicators = document.querySelectorAll(".steps li");
   let currentStep = 0;
 
-  // ===== Helper Function: Show Step =====
   function showStep(index) {
     steps.forEach((step, i) => {
       step.classList.toggle("active", i === index);
-      stepIndicators[i].classList.toggle("active", i === index);
+      if (stepIndicators[i])
+        stepIndicators[i].classList.toggle("active", i === index);
     });
     currentStep = index;
   }
 
-  // ===== Step Navigation Buttons =====
+  // ===== Accordion Category Behavior =====
+  document.querySelectorAll(".category").forEach((category) => {
+    const header = category.querySelector(".category-header");
+    const list = category.querySelector("ol");
+
+    list.style.maxHeight = "0px";
+    list.style.overflow = "hidden";
+    list.style.transition = "max-height 0.4s ease";
+
+    header.addEventListener("click", () => {
+      const isOpen = category.classList.contains("open");
+
+      document.querySelectorAll(".category").forEach((c) => {
+        if (c !== category) {
+          c.classList.remove("open");
+          c.querySelector("ol").style.maxHeight = "0px";
+        }
+      });
+
+      category.classList.toggle("open", !isOpen);
+      list.style.maxHeight = !isOpen ? list.scrollHeight + "px" : "0px";
+    });
+  });
+
+  // ===== Variables for Selections =====
+  let selectedService = "";
+  let selectedDate = "";
+  let selectedTime = "";
+
+  // ===== Service Dropdown (Category Filter) =====
+  const serviceSelect = document.getElementById("service-select");
+  const categories = document.querySelectorAll(".category");
+
+  if (serviceSelect) {
+    serviceSelect.addEventListener("change", () => {
+      const selected = serviceSelect.value;
+      categories.forEach((cat) => {
+        cat.style.display = cat.dataset.category === selected ? "block" : "none";
+      });
+    });
+  }
+
+  // ===== Radio Button Service Selection =====
+  document.querySelectorAll('input[name="service"]').forEach((radio) => {
+    radio.addEventListener("change", (e) => {
+      selectedService = e.target.value;
+      selectedPrice = e.target.dataset.price;
+    });
+  });
+
+  // ===== Date Picker =====
+  if (typeof flatpickr !== "undefined") {
+    flatpickr("#date-picker", {
+      inline: true,
+      dateFormat: "F j, Y",
+      minDate: "today",
+      onChange: (selectedDates, dateStr) => {
+        selectedDate = dateStr;
+      },
+    });
+  }
+
+  // ===== Time Slot Selection =====
+  document.querySelectorAll(".timeslots button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document
+        .querySelectorAll(".timeslots button")
+        .forEach((b) => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      selectedTime = btn.textContent.trim();
+    });
+  });
+
+  // ===== Step Buttons =====
   const btns = {
     continue1: document.getElementById("continue1"),
     continue2: document.getElementById("continue2"),
@@ -21,78 +94,40 @@ document.addEventListener("DOMContentLoaded", () => {
     back2: document.getElementById("back2"),
     back3: document.getElementById("back3"),
     back4: document.getElementById("back4"),
-    finish: document.getElementById("finish")
+    finish: document.getElementById("finish"),
   };
 
-  // ===== Booking Data =====
-  let selectedService = "";
-  let selectedDate = "";
-  let selectedTime = "";
-
-  // ===== Step 1: Service Selection =====
-  const serviceSelect = document.getElementById("service-select");
-  if (serviceSelect) {
-    serviceSelect.addEventListener("change", () => {
-      selectedService = serviceSelect.options[serviceSelect.selectedIndex].text;
-    });
-  }
-
-  // ===== Step 2: Date Picker =====
-  if (typeof flatpickr !== "undefined") {
-    flatpickr("#date-picker", {
-      inline: true,
-      dateFormat: "F j, Y",
-      minDate: "today",
-      onChange: function (selectedDates, dateStr) {
-        selectedDate = dateStr;
-      }
-    });
-  }
-
-  // ===== Step 2: Time Slot Selection =====
-  document.querySelectorAll(".timeslots button").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".timeslots button").forEach(b => b.classList.remove("selected"));
-      btn.classList.add("selected");
-      selectedTime = btn.textContent.trim();
-    });
-  });
-
-  // ===== Navigation Logic =====
-  // Step 1 → Step 2
+  // ===== Step 1 → 2 =====
   if (btns.continue1) {
     btns.continue1.addEventListener("click", () => {
       if (!selectedService) {
+        alert("⚠️ Please select a service first.");
         return;
       }
       showStep(1);
     });
   }
 
-  // Step 2 → Step 3
+  // ===== Step 2 → 3 =====
   if (btns.continue2) {
     btns.continue2.addEventListener("click", () => {
       if (!selectedDate || !selectedTime) {
+        alert("⚠️ Please select a date and time first.");
         return;
       }
-
-      // Update confirmation details
       document.getElementById("confirm-service").textContent = selectedService;
       document.getElementById("confirm-date").textContent = selectedDate;
       document.getElementById("confirm-time").textContent = selectedTime;
-
       showStep(2);
     });
   }
 
-  // Step 3 → Step 4 (Payment)
+  // ===== Step 3 → 4 =====
   if (btns.continue3) {
     btns.continue3.addEventListener("click", () => {
-      // Copy confirmation details to payment step
       document.getElementById("payment-service").textContent = selectedService;
       document.getElementById("payment-date").textContent = selectedDate;
       document.getElementById("payment-time").textContent = selectedTime;
-
       showStep(3);
     });
   }
@@ -105,12 +140,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== Finish Button =====
   if (btns.finish) {
     btns.finish.addEventListener("click", () => {
-      alert("🎉 Booking complete! Thank you for choosing LeRay Aesthetic and Wellness Center.");
-      window.location.href = "../index.html"; // Redirect to home or another page
+      alert(
+        `🎉 Booking complete!\n\nService: ${selectedService}\nDate: ${selectedDate}\nTime: ${selectedTime}`
+      );
+      window.location.href = "../pages/Index.html";
     });
   }
 
-  // ===== Receipt Upload (Optional Visual Feedback) =====
+  // ===== Receipt Upload Validation =====
   const receiptInput = document.getElementById("receipt");
   if (receiptInput) {
     receiptInput.addEventListener("change", () => {

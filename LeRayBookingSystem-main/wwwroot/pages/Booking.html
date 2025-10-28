@@ -21,62 +21,169 @@
     </aside>
 
     <!-- ===== STEP 1: SERVICE SELECTION ===== -->
-    <main class="main-content step active" data-step="1">
-      <h2>Service Selection</h2>
+<main class="main-content step active" data-step="1">
+  <h2>Service Selection</h2>
 
-      <label for="service-select"><strong>*Service:</strong></label>
-      <select id="service-select">
-        <option value="">Select Service</option>
-        <option value="bundle-laser">Bundle (Laser)</option>
-        <option value="bundle-facial">Bundle (Facial)</option>
-        <option value="skin-treatment">Skin Treatment</option>
-        <option value="laser-hair">SHR/IPL (Laser Hair Removal)</option>
-        <option value="laser-treatment">Laser Treatment</option>
-        <option value="whitening">Whitening/Anti-Aging</option>
-      </select>
+  <label for="service-select"><strong>*Service:</strong></label>
+  <select id="service-select">
+    <option value="">Select service</option>
+    <option value="facial">Facial</option>
+    <option value="shr-ipl">SHR/IPL (Laser Hair Removal)</option>
+    <option value="laser-treatment">Laser Treatment</option>
+    <option value="whitening">Whitening / Anti-Aging</option>
+    <option value="semi-permanent">Semi-Permanent Make-Up</option>
+    <option value="slimming">Slimming</option>
+    <option value="skin-treatment">Skin Treatment</option>
+    <option value="microneedling">Microneedling</option>
+    <option value="eyelash-extension">Eyelash Extension</option>
+    <option value="nail-care">Nail Care Services</option>
+    <option value="spa-services">SPA Services</option>
+  </select>
 
-      <div class="service-grid">
-        <div class="category" data-category="bundle-laser">
-          <div class="category-header">
-            <span>Bundle (Laser)</span>
-            <input type="checkbox" />
-          </div>
-          <ol>
-            <li>Deep Cleaning Facial</li>
-            <li>Pico Laser (Any Body Parts)</li>
-            <li>PDT Light Treatment</li>
-          </ol>
-        </div>
+  <div class="service-grid">
 
-        <div class="category" data-category="bundle-facial">
-          <div class="category-header">
-            <span>Bundle (Facial)</span>
-            <input type="checkbox" />
-          </div>
-          <ol>
-            <li>Hydrafacial</li>
-            <li>Oxygen Facial</li>
-            <li>Rejuvenating Mask</li>
-          </ol>
-        </div>
-
-        <div class="category" data-category="skin-treatment">
-          <div class="category-header">
-            <span>Skin Treatment</span>
-            <input type="checkbox" />
-          </div>
-          <ol>
-            <li>Acne Treatment</li>
-            <li>Scar Reduction</li>
-            <li>Glow Peel</li>
-          </ol>
-        </div>
+    <!-- FACIAL -->
+    <div class="category" data-category="facial">
+      <div class="category-header">
+        <span>Facial</span>
       </div>
+      <ol>
+        <li><label><input type="radio" name="service" value="Basic Facial" data-price="899"> Basic Facial – ₱899</label></li>
+        <li><label><input type="radio" name="service" value="Acne Facial" data-price="999"> Acne Facial – ₱999</label></li>
+        <li><label><input type="radio" name="service" value="LeRay Signature Facial" data-price="2499"> LeRay Signature Facial – ₱2499</label></li>
+        <li><label><input type="radio" name="service" value="LeRay Diamond Facial" data-price="1999"> LeRay Diamond Facial – ₱1999</label></li>
+        <li><label><input type="radio" name="service" value="LeRay Hydra Facial" data-price="1999"> LeRay Hydra Facial – ₱1999</label></li>
+        <li><label><input type="radio" name="service" value="Acne Shot Treatment" data-price="100"> Acne Shot Treatment – ₱100/shot</label></li>
+        <li><label><input type="radio" name="service" value="PDT Light Treatment" data-price="499"> PDT Light Treatment – ₱499</label></li>
+        <li><label><input type="radio" name="service" value="Gold Mask Treatment" data-price="499"> Gold Mask Treatment – ₱499</label></li>
+      </ol>
+    </div>
 
-      <div class="nav-buttons">
-        <button class="btn continue-btn" id="continue1">Continue</button>
+    <!-- SHR/IPL -->
+    <div class="category" data-category="shr-ipl">
+      <div class="category-header">
+        <span>SHR/IPL (Laser Hair Removal)</span>
       </div>
-    </main>
+      <ol>
+        <li><label><input type="radio" name="service" value="Upper Lip SHR/IPL" data-price="600"> Upper Lip – ₱600</label></li>
+        <li><label><input type="radio" name="service" value="Underarm SHR/IPL" data-price="699"> Underarm – ₱699</label></li>
+        <li><label><input type="radio" name="service" value="Full Legs SHR/IPL" data-price="2499"> Full Legs – ₱2499</label></li>
+      </ol>
+    </div>
+
+    <!-- LASER TREATMENT -->
+    <div class="category" data-category="laser-treatment">
+      <div class="category-header">
+        <span>Laser Treatment</span>
+      </div>
+      <ol>
+        <li><label><input type="radio" name="service" value="Carbon Laser" data-price="2999"> Carbon Laser – ₱2999</label></li>
+        <li><label><input type="radio" name="service" value="Q-Switch Laser" data-price="1999"> Q-Switch Laser – ₱1999</label></li>
+        <li><label><input type="radio" name="service" value="Tattoo Removal" data-price="1999"> Tattoo Removal – ₱1999</label></li>
+      </ol>
+    </div>
+
+    <!-- WHITENING / ANTI-AGING -->
+    <div class="category" data-category="whitening">
+      <div class="category-header">
+        <span>Whitening / Anti-Aging</span>
+      </div>
+      <ol>
+        <li><label><input type="radio" name="service" value="Glutathione Drip" data-price="899"> Glutathione Drip – ₱899</label></li>
+        <li><label><input type="radio" name="service" value="Collagen Drip" data-price="999"> Collagen Drip – ₱999</label></li>
+        <li><label><input type="radio" name="service" value="Vitamin C Drip" data-price="799"> Vitamin C Drip – ₱799</label></li>
+      </ol>
+    </div>
+
+    <!-- SEMI-PERMANENT MAKE-UP -->
+    <div class="category" data-category="semi-permanent">
+      <div class="category-header">
+        <span>Semi-Permanent Make-Up</span>
+      </div>
+      <ol>
+        <li><label><input type="radio" name="service" value="Eyebrow Embroidery" data-price="4999"> Eyebrow Embroidery – ₱4999</label></li>
+        <li><label><input type="radio" name="service" value="Eyeliner Tattoo" data-price="2999"> Eyeliner Tattoo – ₱2999</label></li>
+        <li><label><input type="radio" name="service" value="Lip Tint Tattoo" data-price="3999"> Lip Tint Tattoo – ₱3999</label></li>
+      </ol>
+    </div>
+
+    <!-- SLIMMING -->
+    <div class="category" data-category="slimming">
+      <div class="category-header">
+        <span>Slimming</span>
+      </div>
+      <ol>
+        <li><label><input type="radio" name="service" value="RF Cavitation" data-price="499"> RF Cavitation – ₱499</label></li>
+        <li><label><input type="radio" name="service" value="Body Contouring" data-price="899"> Body Contouring – ₱899</label></li>
+        <li><label><input type="radio" name="service" value="Lipo Cavitation" data-price="999"> Lipo Cavitation – ₱999</label></li>
+      </ol>
+    </div>
+
+    <!-- SKIN TREATMENT -->
+    <div class="category" data-category="skin-treatment">
+      <div class="category-header">
+        <span>Skin Treatment</span>
+      </div>
+      <ol>
+        <li><label><input type="radio" name="service" value="Wart Removal" data-price="999"> Wart Removal – ₱999</label></li>
+        <li><label><input type="radio" name="service" value="Mole Removal" data-price="899"> Mole Removal – ₱899</label></li>
+        <li><label><input type="radio" name="service" value="Scar Revision" data-price="1499"> Scar Revision – ₱1499</label></li>
+      </ol>
+    </div>
+
+    <!-- MICRONEEDLING -->
+    <div class="category" data-category="microneedling">
+      <div class="category-header">
+        <span>Microneedling</span>
+      </div>
+      <ol>
+        <li><label><input type="radio" name="service" value="BB Glow" data-price="2999"> BB Glow – ₱2999</label></li>
+        <li><label><input type="radio" name="service" value="Derma Pen Treatment" data-price="2499"> Derma Pen Treatment – ₱2499</label></li>
+      </ol>
+    </div>
+
+    <!-- EYELASH EXTENSION -->
+    <div class="category" data-category="eyelash-extension">
+      <div class="category-header">
+        <span>Eyelash Extension</span>
+      </div>
+      <ol>
+        <li><label><input type="radio" name="service" value="Classic Lash Extension" data-price="699"> Classic Lash Extension – ₱699</label></li>
+        <li><label><input type="radio" name="service" value="Volume Lash Extension" data-price="899"> Volume Lash Extension – ₱899</label></li>
+        <li><label><input type="radio" name="service" value="Lash Retouch" data-price="499"> Lash Retouch – ₱499</label></li>
+      </ol>
+    </div>
+
+    <!-- NAIL CARE SERVICES -->
+    <div class="category" data-category="nail-care">
+      <div class="category-header">
+        <span>Nail Care Services</span>
+      </div>
+      <ol>
+        <li><label><input type="radio" name="service" value="Manicure" data-price="199"> Manicure – ₱199</label></li>
+        <li><label><input type="radio" name="service" value="Pedicure" data-price="199"> Pedicure – ₱199</label></li>
+        <li><label><input type="radio" name="service" value="Foot Spa" data-price="299"> Foot Spa – ₱299</label></li>
+      </ol>
+    </div>
+
+    <!-- SPA SERVICES -->
+    <div class="category" data-category="spa-services">
+      <div class="category-header">
+        <span>SPA Services</span>
+      </div>
+      <ol>
+        <li><label><input type="radio" name="service" value="Full Body Massage" data-price="499"> Full Body Massage – ₱499</label></li>
+        <li><label><input type="radio" name="service" value="Hot Stone Massage" data-price="699"> Hot Stone Massage – ₱699</label></li>
+        <li><label><input type="radio" name="service" value="Aromatherapy Massage" data-price="799"> Aromatherapy Massage – ₱799</label></li>
+      </ol>
+    </div>
+
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn continue-btn" id="continue1">Continue</button>
+  </div>
+</main>
 
     <!-- ===== STEP 2: DATE & TIME ===== -->
     <main class="main-content step" data-step="2">
@@ -106,7 +213,6 @@
           </div>
         </div>
       </div>
-
       <div class="nav-buttons">
         <button class="btn back-btn" id="back2">Back</button>
         <button class="btn continue-btn" id="continue2">Continue</button>
@@ -120,25 +226,18 @@
         <div class="confirmation-header">
           <img src="https://cdn-icons-png.flaticon.com/512/3159/3159066.png" alt="confetti" class="confetti-icon" />
           <h3>Congratulations</h3>
-          <p>Appointment ID #4675</p>
+          <p>Appointment ID #</p>
         </div>
 
         <div class="confirmation-body">
-          <p><strong>Date:</strong> <span id="confirm-date">—</span></p>
-          <p><strong>Time:</strong> <span id="confirm-time">—</span></p>
-          <p><strong>Service:</strong> <span id="confirm-service">—</span></p>
-          <ul>
-            <li>Deep Cleaning Facial</li>
-            <li>Pico Laser</li>
-            <li>PDT Light Treatment</li>
-          </ul>
+          <p><strong>Service:</strong> <span id="confirm-service">N/A</span></p>
+          <p><strong>Date:</strong> <span id="confirm-date">N/A</span></p>
+          <p><strong>Time:</strong> <span id="confirm-time">N/A</span></p>
           <p><strong>Location:</strong> 999 JP Rizal Street, Concepcion Uno, Marikina City</p>
           <p><strong>Price:</strong> Php 1,899</p>
           <p><strong>Down payment:</strong> Php 400</p>
           <hr />
-          <p class="note">
-            Note: The downpayment is 20% of the total service amount. The remaining balance will be settled on the appointment day.
-          </p>
+          <p class="note">Note: Downpayment is 20% of the total service amount.</p>
         </div>
       </div>
 
@@ -166,8 +265,8 @@
         </div>
 
         <div class="payment-info">
-          <p><strong>GCash Account:</strong> 0912-345-6789 (LeRay)</p>
-          <p><strong>PayMaya Account:</strong> 0998-765-4321 (LeRay)</p>
+          <p><strong>GCash:</strong> 0912-345-6789 (LeRay)</p>
+          <p><strong>PayMaya:</strong> 0998-765-4321 (LeRay)</p>
         </div>
 
         <div class="upload-section">
@@ -185,6 +284,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="/LeRayBookingSystem-main/wwwroot/js/Booking.js"></script>
+  <script src="../js/Booking.js"></script>
 </body>
 </html>

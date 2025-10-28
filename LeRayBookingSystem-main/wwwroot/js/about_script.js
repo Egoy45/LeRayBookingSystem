@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (learnMoreBtn) {
     learnMoreBtn.addEventListener("click", () => {
       alert("Thank you for your interest! Visit our Services page to explore more treatments.");
-      window.location.href = "../ServicesBooking/facial.html";
+      window.location.href = "../pages/facial.html";
     });
   }
 
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
         signupModal.style.display = "flex";
       } else {
         // Fallback redirect if modal doesn't exist
-        window.location.href = "../BookingForm/booking.html";
+        window.location.href = "../pages/Booking.html";
       }
     });
   }
