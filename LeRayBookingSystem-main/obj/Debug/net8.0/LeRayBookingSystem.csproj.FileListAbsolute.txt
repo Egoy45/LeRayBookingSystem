@@ -2358,3 +2358,4 @@ C:\Users\supil\source\repos\LeRayBookingSystem-main\LeRayBookingSystem-main\obj\
 C:\Users\supil\source\repos\LeRayBookingSystem-main\LeRayBookingSystem-main\obj\Debug\net8.0\LeRayBookingSystem.pdb
 C:\Users\supil\source\repos\LeRayBookingSystem-main\LeRayBookingSystem-main\obj\Debug\net8.0\LeRayBookingSystem.genruntimeconfig.cache
 C:\Users\supil\source\repos\LeRayBookingSystem-main\LeRayBookingSystem-main\obj\Debug\net8.0\ref\LeRayBookingSystem.dll
+C:\Users\supil\source\repos\LeRayBookingSystem-main\LeRayBookingSystem-main\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

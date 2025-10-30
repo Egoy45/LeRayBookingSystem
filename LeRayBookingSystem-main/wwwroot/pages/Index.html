@@ -17,78 +17,78 @@
 
 <body>
   <!-- ===== HEADER ===== -->
-  <header>
-    <div class="container topbar" role="banner">
-      <div class="brand" aria-label="LeRay brand">
-        <div class="logo" aria-hidden="true">LE'RAY</div>
-        <div>
-          <h1>Le'Ray</h1>
-          <p>Aesthetic & Wellness</p>
-        </div>
-      </div>
-
-      <!-- Navigation -->
-      <nav aria-label="Main navigation">
-        <ul class="nav-list" role="menubar">
-          <li><a href="Index.html" role="menuitem">HOME</a></li>
-          <li class="dropdown" aria-haspopup="true">
-            <div class="dropdown-toggle" tabindex="0" id="servicesToggle" aria-expanded="false">
-              <span>SERVICES ▾</span>
-            </div>
-            <div class="dropdown-menu" role="menu" aria-labelledby="servicesToggle">
-              <a href="../pages/facial.html" role="menuitem">FACIAL</a>
-              <a href="../pages/LaserTreatment.html" role="menuitem">LASER</a>
-              <a href="../pages/SkinTreatment.html" role="menuitem">SKIN TREATMENT</a>
-              <a href="../pages/Spa.html" role="menuitem">SPA</a>
-              <a href="../pages/Slimming.html" role="menuitem">SLIMMING</a>
-              <a href="../pages/LaserHairRemoval.html" role="menuitem">LASER HAIR REMOVAL</a>
-              <a href="../pages/Eyelash.html" role="menuitem">EYELASH</a>
-              <a href="../pages/MicroNeedling.html" role="menuitem">MICRONEEDLING</a>
-              <a href="../pages/NailCare.html" role="menuitem">NAIL CARE</a>
-
-            </div>
-          </li>
-          <li><a href="About.html" role="menuitem">ABOUT</a></li>
-          <li><a href="ContactUs.html" role="menuitem">CONTACT US</a></li>
-        </ul>
-      </nav>
-
-      <!-- Utilities -->
-      <div class="utils">
-        <a href="https://www.facebook.com/login" target="_blank" title="Facebook" aria-label="Facebook">
-          <button class="icon-btn facebook"><i class="fab fa-facebook-f"></i></button>
-        </a>
-        <a href="https://www.instagram.com/accounts/login/" target="_blank" title="Instagram" aria-label="Instagram">
-          <button class="icon-btn instagram"><i class="fab fa-instagram"></i></button>
-        </a>
-        <!-- Account Icon in Navbar -->
-<button id="openSidebar" class="icon-btn" title="Account">
-  <i class="fa fa-user"></i>
-</button>
-
-<!-- Overlay (click outside to close) -->
-<div id="sidebarOverlay" class="sidebar-overlay"></div>
-
-<!-- Account Sidebar -->
-<div id="sidebar" class="sidebar">
-  <button id="closeSidebar" class="close-btn">&times;</button>
-
-  <div class="profile-section">
-    <img src="../images/default-profile.png" alt="Profile" class="profile-pic">
-    <h3 class="user-name">NAME</h3>
-    <a href="#" class="edit-profile-link">Edit Profile</a>
-  </div>
-
-  <ul class="sidebar-menu">
-    <li><a href="#">Client History</a></li>
-    <li><a href="#">Reschedule</a></li>
-    <li><a href="#">Loyalty Progress</a></li>
-  </ul>
-</div>
-        <button class="book-btn" id="bookNowBtn">BOOK NOW</button>
+  <header class="site-header" role="banner">
+  <div class="container topbar">
+    <div class="brand" aria-label="LeRay brand">
+      <div class="logo" aria-hidden="true">LE'RAY</div>
+      <div class="brand-text">
+        <h1 class="site-title">Le'Ray</h1>
+        <p class="site-tag">Aesthetic &amp; Wellness</p>
       </div>
     </div>
-  </header>
+
+    <!-- NAVIGATION -->
+    <nav class="main-nav" aria-label="Main navigation">
+      <ul class="nav-list">
+       <li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    SERVICES
+  </a>
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="servicesDropdown">
+    <li><a class="dropdown-item" href="/pages/facial.html">Facial</a></li>
+    <li><a class="dropdown-item" href="/pages/LaserTreatment.html">Laser Treatment</a></li>
+    <li><a class="dropdown-item" href="/pages/SkinTreatment.html">Skin Treatment</a></li>
+    <li><a class="dropdown-item" href="/pages/Spa.html">Spa</a></li>
+    <li><a class="dropdown-item" href="/pages/Slimming.html">Slimming</a></li>
+    <li><a class="dropdown-item" href="/pages/LaserHairRemoval.html">Laser Hair Removal</a></li>
+    <li><a class="dropdown-item" href="/pages/Eyelash.html">Eyelash</a></li>
+    <li><a class="dropdown-item" href="/pages/MicroNeedling.html">Microneedling</a></li>
+    <li><a class="dropdown-item" href="/pages/NailCare.html">Nail Care</a></li>
+    <li><a class="dropdown-item" href="/pages/SemiPermanentMakeup.html">Semi-Permanent Makeup</a></li>
+    <li><a class="dropdown-item" href="/pages/Whitening.html">Whitening</a></li>
+</ul>
+
+
+
+</li>
+        <li class="nav-item"><a class="nav-link" href="About.html">ABOUT</a></li>
+        <li class="nav-item"><a class="nav-link" href="ContactUs.html">CONTACT US</a></li>
+      </ul>
+    </nav>
+
+    <!-- UTILITIES -->
+    <div class="utils" aria-hidden="false">
+      <a href="https://www.facebook.com/login"
+         class="social-link"
+         target="_blank"
+         rel="noopener noreferrer"
+         title="Facebook"
+         aria-label="Open Facebook">
+        <button type="button" class="icon-btn facebook" aria-hidden="false" aria-label="Facebook">
+          <i class="fab fa-facebook-f" aria-hidden="true"></i>
+        </button>
+      </a>
+
+      <a href="https://www.instagram.com/accounts/login/"
+         class="social-link"
+         target="_blank"
+         rel="noopener noreferrer"
+         title="Instagram"
+         aria-label="Open Instagram">
+        <button type="button" class="icon-btn instagram" aria-hidden="false" aria-label="Instagram">
+          <i class="fab fa-instagram" aria-hidden="true"></i>
+        </button>
+      </a>
+
+      <button id="openSidebar" class="icon-btn" type="button" aria-label="Open account sidebar">
+        <i class="fa fa-user" aria-hidden="true"></i>
+      </button>
+
+      <button id="bookNowBtn" class="book-btn" type="button">BOOK NOW</button>
+    </div>
+  </div>
+</header>
+
 <!-- SIGN UP MODAL -->
 <div id="signupModal" class="modal">
   <div class="modal-content">
@@ -153,17 +153,30 @@
         <span>or continue with</span>
       </div>
 
-      <div class="social-login">
-        <button class="social-btn google">
-          <i class="fa-brands fa-google"></i> Continue with Google
-        </button>
-        <button class="social-btn facebook">
-          <i class="fa-brands fa-facebook-f"></i> Continue with Facebook
-        </button>
-        <button class="social-btn instagram">
-          <i class="fa-brands fa-instagram"></i> Continue with Instagram
-        </button>
-      </div>
+      <nav aria-label="Main navigation">
+  <ul class="nav-list">
+    <li><a href="About.html">About</a></li>
+    <li><a href="ContactUs.html">Contact Us</a></li>
+  </ul>
+</nav>
+
+<div class="social-login">
+  <button type="button" class="social-btn google" aria-label="Continue with Google">
+    <i class="fa-brands fa-google" aria-hidden="true"></i>
+    <span>Continue with Google</span>
+  </button>
+
+  <button type="button" class="social-btn facebook" aria-label="Continue with Facebook">
+    <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+    <span>Continue with Facebook</span>
+  </button>
+
+  <button type="button" class="social-btn instagram" aria-label="Continue with Instagram">
+    <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+    <span>Continue with Instagram</span>
+  </button>
+</div>
+
 
       <p class="switch-text">
         Forgot account? <a href="#" id="openSignup">Sign up</a>
@@ -181,13 +194,14 @@
       <img src="../Images/LerayImages/BackgroundLeray.PNG" alt="LeRay Aesthetic and Wellness Center Background">
     </section>
 
-    <!-- GALLERY -->
+    <main class="container" role="main" id="main-content">
     <section class="hero-carousel">
-      <div class="carousel-slide active" style="background-image: url('../Images/LerayImages/Service1.jpg');"></div>
-      <div class="carousel-slide" style="background-image: url('../Images/LerayImages/Services2.jpg');"></div>
-      <div class="carousel-slide" style="background-image: url('../Images/LerayImages/Services3.jpg');"></div>
-      <div class="carousel-slide" style="background-image: url('../Images/LerayImages/Services4.jpg');"></div>
-      <div class="carousel-slide" style="background-image: url('../Images/LerayImages/Services5.jpg');"></div>
+      <div class="carousel-slide bg-service1 active"></div>
+<div class="carousel-slide bg-service2"></div>
+<div class="carousel-slide bg-service3"></div>
+<div class="carousel-slide bg-service4"></div>
+<div class="carousel-slide bg-service5"></div>
+
 
       <!-- Navigation -->
       <button class="carousel-control prev">&#10094;</button>
@@ -201,19 +215,19 @@
 
       <div class="services-grid">
         <div class="service-card" onclick="window.location.href='facial.html'">
-          <img src="../Images/LerayServices/" alt="Facial">
+          <img src="../Images/LerayServices/Facial.jpg" alt="Facial">
           <p>FACIAL</p>
         </div>
         <div class="service-card" onclick="window.location.href='Slimming.html'">
-          <img src="LerayServices/Slimming.jpg" alt="Slimming">
+          <img src="../Images/LerayServices/Slimming.jpg" alt="Slimming">
           <p>SLIMMING</p>
         </div>
         <div class="service-card" onclick="window.location.href='SkinTreatment.html'">
-          <img src="../images/LerayServices/Skin-Treatment.jpg" alt="Skin Treatment">
+          <img src="../Images/LerayServices/Skin-Treatment.jpg" alt="Skin Treatment">
           <p>SKIN TREATMENT</p>
         </div>
         <div class="service-card" onclick="window.location.href='LaserHairRemoval.html'">
-          <img src="../images/LerayServices/IPL.jpg" alt="Laser Hair Removal">
+          <img src="../Images/LerayServices/IPL.jpg" alt="Laser Hair Removal">
           <p>SHR/IPL LASER HAIR REMOVAL</p>
         </div>
         <div class="service-card" onclick="window.location.href='LaserTreatment.html'">
