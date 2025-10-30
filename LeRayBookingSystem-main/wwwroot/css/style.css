@@ -859,3 +859,30 @@
 .sidebar-menu a:hover {
   background: #f2f2f2;
 }
+/* Carousel background images */
+.bg-service1 {
+  background-image: url("../Images/LerayImages/Service1.jpg");
+}
+
+.bg-service2 {
+  background-image: url("../Images/LerayImages/Services2.jpg");
+}
+
+.bg-service3 {
+  background-image: url("../Images/LerayImages/Services3.jpg");
+}
+
+.bg-service4 {
+  background-image: url("../Images/LerayImages/Services4.jpg");
+}
+
+.bg-service5 {
+  background-image: url("../Images/LerayImages/Services5.jpg");
+}
+
+/* Shared styling for all slides */
+.carousel-slide {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

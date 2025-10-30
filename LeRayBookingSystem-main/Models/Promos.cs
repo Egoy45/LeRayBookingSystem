@@ -9,21 +9,16 @@ namespace LeRayBookingSystem.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(100)]
+        [Required, MaxLength(100)]
         public string? Title { get; set; }
 
-        [Required]
-        [Column(TypeName = "text")]
-        public string? Description { get; set; }    
+        [Required, Column(TypeName = "text")]
+        public string? Description { get; set; }
 
         [Column(TypeName = "decimal(10, 2)")]
         public decimal Price { get; set; }
 
-        public TimeSpan Duration { get; set; }
-
-        [Required]
-        [MaxLength(50)]
+        [Required, MaxLength(50)]
         public string? PromoCode { get; set; }
 
         public DateTime StartDate { get; set; }
@@ -32,7 +27,7 @@ namespace LeRayBookingSystem.Models
 
         public bool IsActive { get; set; } = true;
 
-        [Required]
+        // ✅ Make optional so validation won’t fail before controller fills it
         public string? CreatedBy { get; set; }
 
         [ForeignKey("CreatedBy")]

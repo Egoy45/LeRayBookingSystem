@@ -1,4 +1,7 @@
-@model IEnumerable<LeRayBookingSystem.Models.Promos>
+﻿@model IEnumerable<LeRayBookingSystem.Models.Promos>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<LeRayBookingSystem.Models.ApplicationUser> SignInManager
+@inject UserManager<LeRayBookingSystem.Models.ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Promos";
@@ -14,32 +17,46 @@
     <thead>
         <tr>
             <th>Title</th>
-            <th>Promo Code</th>
+            <th>Description</th>
             <th>Price</th>
-            <th>Duration</th>
+            <th>Promo Code</th>
             <th>Start Date</th>
             <th>End Date</th>
-            <th>Active</th>
-            <th></th>
+            <th>Is Active</th>
+            @* 👇 Show only if the logged-in user is an Admin *@
+            @if (User.IsInRole("Admin"))
+            {
+                <th>Created By</th>
+            }
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model ?? Enumerable.Empty<LeRayBookingSystem.Models.Promos>())
+        @foreach (var item in Model)
         {
             <tr>
-                <td>@(item?.Title ?? "N/A")</td>
-                <td>@(item?.PromoCode ?? "N/A")</td>
-                <td>@item?.Price.ToString("C")</td>
-                <td>@item?.Duration</td>
-                <td>@item?.StartDate.ToShortDateString()</td>
-                <td>@item?.EndDate.ToShortDateString()</td>
-                <td>@(item?.IsActive == true ? "Yes" : "No")</td>
+                <td>@item.Title</td>
+                <td>@item.Description</td>
+                <td>@item.Price.ToString("C")</td>
+                <td><strong>@item.PromoCode</strong></td>
+                <td>@item.StartDate.ToShortDateString()</td>
+                <td>@item.EndDate.ToShortDateString()</td>
+                <td>@(item.IsActive ? "Yes" : "No")</td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>@item.CreatedByUser?.FullName ?? "Unknown"</td>
+                }
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item?.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item?.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item?.Id">Delete</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
