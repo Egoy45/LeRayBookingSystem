@@ -15,12 +15,14 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages(); // 👈 required for Identity pages
 builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddTransient<IEmailSender, EmailService>();
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
     ));
 
+// ✅ Configure Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
@@ -28,10 +30,12 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
+// ✅ Configure Email Settings
 builder.Services.Configure<EmailSettings>(
     builder.Configuration.GetSection("EmailSettings"));
 
 var app = builder.Build();
+
 
 // ✅ SEED ROLES & SUPER ADMIN
 using (var scope = app.Services.CreateScope())
@@ -102,7 +106,7 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Middleware
+// ✅ Middleware
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -115,9 +119,37 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
+app.Use(async (context, next) =>
+{
+    if (context.User.Identity != null && context.User.Identity.IsAuthenticated)
+    {
+        var userManager = context.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();
+        var user = await userManager.GetUserAsync(context.User);
+
+        if (user != null)
+        {
+            var roles = await userManager.GetRolesAsync(user);
+            if (roles.Contains("Admin") && context.Request.Path == "/")
+            {
+                context.Response.Redirect("/Admin/Dashboard");
+                return;
+            }
+        }
+    }
+    await next();
+});
+
 app.UseAuthorization();
 
-app.MapRazorPages(); // ✅ works now because AddRazorPages was added
+// ✅ Redirect after login based on role
+app.MapControllerRoute(
+    name: "roleRedirect",
+    pattern: "Account/LoginRedirect",
+    defaults: new { controller = "Account", action = "LoginRedirect" }
+);
+
+// ✅ Razor Pages + Default Route
+app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
