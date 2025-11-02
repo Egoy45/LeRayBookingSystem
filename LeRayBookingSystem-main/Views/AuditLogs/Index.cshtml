@@ -1,4 +1,4 @@
-@model IEnumerable<LeRayBookingSystem.Models.AuditLog>
+﻿@model IEnumerable<LeRayBookingSystem.Models.AuditLog>
 
 @{
     ViewData["Title"] = "Audit Logs";
@@ -6,9 +6,10 @@
 
 <h1>Audit Logs</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
-</p>
+<!-- ✅ Export button should be outside the table -->
+<a asp-action="ExportToExcel" class="btn btn-success mb-3">
+    <i class="bi bi-file-earmark-excel"></i> Export to Excel
+</a>
 
 <table class="table table-bordered table-striped">
     <thead>

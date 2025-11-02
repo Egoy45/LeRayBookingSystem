@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/LeRayBookingSystem.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
 </head>
 <body>
     <header>
@@ -57,9 +59,12 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-controller="Admin" asp-action="Dashboard">Dashboard</a>
                                 </li>
-                                <li class="nav-item">
+
+                                <!-- Removed duplicate Services menu -->
+                                <!-- <li class="nav-item">
                                     <a class="nav-link text-dark" asp-controller="Services" asp-action="Index">Manage Services</a>
-                                </li>
+                                </li> -->
+
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-controller="Appointments" asp-action="Index">Manage Appointments</a>
                                 </li>
@@ -69,9 +74,13 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-controller="ApplicationUsers" asp-action="Index">Manage Users</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="AuditLogs" asp-action="Index">Audit Logs</a>
+                                </li>
                             }
                         }
                     </ul>
+
 
                     <!-- Right side: User Account Links -->
                     <ul class="navbar-nav">

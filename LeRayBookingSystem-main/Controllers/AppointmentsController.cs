@@ -18,12 +18,18 @@ namespace LeRayBookingSystem.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IEmailService _emailService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly AuditLogService _auditService;
 
-        public AppointmentsController(ApplicationDbContext context, IEmailService emailService, UserManager<ApplicationUser> userManager)
+        public AppointmentsController(
+            ApplicationDbContext context,
+            IEmailService emailService,
+            UserManager<ApplicationUser> userManager,
+            AuditLogService auditService)
         {
             _context = context;
             _emailService = emailService;
             _userManager = userManager;
+            _auditService = auditService;
         }
 
         // ✅ ADMIN / STAFF ACCESS: View all appointments
@@ -45,7 +51,6 @@ namespace LeRayBookingSystem.Controllers
         public async Task<IActionResult> MyAppointments()
         {
             var userId = _userManager.GetUserId(User);
-
             if (string.IsNullOrEmpty(userId))
                 return Unauthorized();
 
@@ -75,7 +80,6 @@ namespace LeRayBookingSystem.Controllers
             if (appointment == null)
                 return NotFound();
 
-            // Restrict client access to their own appointments only
             if (User.IsInRole("Client") && appointment.UserId != _userManager.GetUserId(User))
                 return Forbid();
 
@@ -89,14 +93,13 @@ namespace LeRayBookingSystem.Controllers
             ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Title");
             ViewData["PromoId"] = new SelectList(_context.Promos, "Id", "Title");
 
-            // Only Admin can select users manually
             if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
                 ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName");
 
             return View();
         }
 
-        // POST: Appointments/Create
+        // ✅ POST: Appointments/Create (with Audit Log)
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Client,Admin,SuperAdmin")]
@@ -109,27 +112,27 @@ namespace LeRayBookingSystem.Controllers
                 return View(appointment);
             }
 
-            // Assign current user if client
             if (User.IsInRole("Client"))
-            {
                 appointment.UserId = _userManager.GetUserId(User)!;
-            }
 
-            // System fields
             appointment.PaymentId = Guid.NewGuid().ToString();
             appointment.Status = "Pending";
             appointment.PaymentStatus = "Unpaid";
-            appointment.CreatedAt = DateTime.Now;
-            appointment.UpdatedAt = DateTime.Now;
-            appointment.LastUpdatedAt = DateTime.Now;
-            appointment.CreatedBy = appointment.UserId!;
-            appointment.UpdatedBy = appointment.UserId!;
-            appointment.LastUpdatedBy = appointment.UserId!;
+            appointment.CreatedAt = appointment.UpdatedAt = appointment.LastUpdatedAt = DateTime.Now;
+            appointment.CreatedBy = appointment.UpdatedBy = appointment.LastUpdatedBy = appointment.UserId!;
 
             _context.Add(appointment);
             await _context.SaveChangesAsync();
 
-            // Send confirmation email
+            // 🧾 Audit Log
+            await _auditService.LogAsync(
+                "Appointment",
+                "Created",
+                appointment.Id.ToString(),
+                $"Appointment for service ID {appointment.ServiceId} scheduled on {appointment.AppointmentDate:MMMM dd, yyyy hh:mm tt}."
+            );
+
+            // 📧 Send confirmation email
             var user = await _context.Users.FindAsync(appointment.UserId);
             var service = await _context.Services.FindAsync(appointment.ServiceId);
 
@@ -146,7 +149,6 @@ namespace LeRayBookingSystem.Controllers
                 await _emailService.SendEmailAsync(user.Email, subject, body);
             }
 
-            // Redirect based on role
             return User.IsInRole("Admin") || User.IsInRole("SuperAdmin")
                 ? RedirectToAction(nameof(Index))
                 : RedirectToAction(nameof(MyAppointments));
@@ -170,7 +172,7 @@ namespace LeRayBookingSystem.Controllers
             return View(appointment);
         }
 
-        // POST: Appointments/Edit/5
+        // ✅ POST: Appointments/Edit (with Audit Log)
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,SuperAdmin")]
@@ -189,12 +191,18 @@ namespace LeRayBookingSystem.Controllers
 
             try
             {
-                appointment.UpdatedAt = DateTime.Now;
-                appointment.LastUpdatedAt = DateTime.Now;
-                appointment.UpdatedBy = appointment.UserId!;
-                appointment.LastUpdatedBy = appointment.UserId!;
+                appointment.UpdatedAt = appointment.LastUpdatedAt = DateTime.Now;
+                appointment.UpdatedBy = appointment.LastUpdatedBy = appointment.UserId!;
                 _context.Update(appointment);
                 await _context.SaveChangesAsync();
+
+                // 🧾 Audit Log
+                await _auditService.LogAsync(
+                    "Appointment",
+                    "Updated",
+                    appointment.Id.ToString(),
+                    $"Appointment ID {appointment.Id} updated. New date: {appointment.AppointmentDate:MMMM dd, yyyy hh:mm tt}."
+                );
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -223,7 +231,7 @@ namespace LeRayBookingSystem.Controllers
             return appointment == null ? NotFound() : View(appointment);
         }
 
-        // POST: Appointments/Delete/5
+        // ✅ POST: Appointments/Delete (with Audit Log)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,SuperAdmin")]
@@ -234,6 +242,14 @@ namespace LeRayBookingSystem.Controllers
             {
                 _context.Appointments.Remove(appointment);
                 await _context.SaveChangesAsync();
+
+                // 🧾 Audit Log
+                await _auditService.LogAsync(
+                    "Appointment",
+                    "Deleted",
+                    id.ToString(),
+                    $"Appointment ID {id} deleted."
+                );
             }
 
             return RedirectToAction(nameof(Index));

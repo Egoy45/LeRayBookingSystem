@@ -6,11 +6,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using LeRayBookingSystem.Models;
+using LeRayBookingSystem.Services; // ✅ Added for AuditLogService
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +30,7 @@ namespace LeRayBookingSystem.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly AuditLogService _auditService; // ✅ Added
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
@@ -37,7 +38,8 @@ namespace LeRayBookingSystem.Areas.Identity.Pages.Account
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            AuditLogService auditService) // ✅ Injected
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -46,6 +48,7 @@ namespace LeRayBookingSystem.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            _auditService = auditService;
         }
 
         [BindProperty]
@@ -118,6 +121,14 @@ namespace LeRayBookingSystem.Areas.Identity.Pages.Account
                     // ✅ Assign 'Client' role to the new user
                     await _userManager.AddToRoleAsync(user, "Client");
 
+                    // ✅ Log registration success
+                    await _auditService.LogAsync(
+                        "Account",
+                        "Register",
+                        user.Id,
+                        $"User '{user.Email}' successfully registered as Client."
+                    );
+
                     // ✅ Email confirmation
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -142,8 +153,26 @@ namespace LeRayBookingSystem.Areas.Identity.Pages.Account
                     }
                 }
 
+                // ❌ Log failed registration attempt
+                await _auditService.LogAsync(
+                    "Account",
+                    "RegisterFailed",
+                    "Unknown",
+                    $"Failed registration attempt for email '{Input.Email}'. Errors: {string.Join(", ", result.Errors.Select(e => e.Description))}"
+                );
+
                 foreach (var error in result.Errors)
                     ModelState.AddModelError(string.Empty, error.Description);
+            }
+            else
+            {
+                // ❌ Log invalid form submission
+                await _auditService.LogAsync(
+                    "Account",
+                    "RegisterFailed",
+                    "Unknown",
+                    $"Invalid registration form submission for '{Input?.Email}'."
+                );
             }
 
             // If we got this far, something failed, redisplay form
@@ -155,7 +184,6 @@ namespace LeRayBookingSystem.Areas.Identity.Pages.Account
         {
             try
             {
-                // Not used since we call ApplicationUser constructor directly
                 return Activator.CreateInstance<ApplicationUser>();
             }
             catch

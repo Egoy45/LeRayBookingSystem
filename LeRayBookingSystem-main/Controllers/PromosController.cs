@@ -6,59 +6,64 @@ using Microsoft.EntityFrameworkCore;
 using LeRayBookingSystem.Data;
 using LeRayBookingSystem.Models;
 using Microsoft.AspNetCore.Identity;
+using LeRayBookingSystem.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LeRayBookingSystem.Controllers
 {
+    [Authorize(Roles = "Admin,SuperAdmin")]
     public class PromosController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly AuditLogService _auditService;
 
-        public PromosController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public PromosController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, AuditLogService auditService)
         {
             _context = context;
             _userManager = userManager;
+            _auditService = auditService;
         }
 
-        // GET: Promos
+        // ✅ VIEW ALL PROMOS
         public async Task<IActionResult> Index()
         {
             var promos = await _context.Promos
                 .Include(p => p.CreatedByUser)
                 .ToListAsync();
-
             return View(promos);
         }
 
-        // GET: Promos/Details/5
+        // ✅ VIEW DETAILS
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null) return NotFound();
+            if (id == null)
+                return NotFound();
 
             var promo = await _context.Promos
                 .Include(p => p.CreatedByUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (promo == null) return NotFound();
+            if (promo == null)
+                return NotFound();
 
             return View(promo);
         }
 
-        // GET: Promos/Create
+        // ✅ CREATE (GET)
         public IActionResult Create()
         {
             var promo = new Promos
             {
-                PromoCode = GeneratePromoCode(), // ✅ auto-generate 4-char promo code
+                PromoCode = GeneratePromoCode(),
                 StartDate = DateTime.Now,
-                EndDate = DateTime.Now.AddDays(30), // default 30 days validity
+                EndDate = DateTime.Now.AddDays(30),
                 IsActive = true
             };
-
             return View(promo);
         }
 
-        // POST: Promos/Create
+        // ✅ CREATE (POST) — with Audit Log
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,Description,Price,PromoCode,StartDate,EndDate,IsActive")] Promos promo)
@@ -66,40 +71,47 @@ namespace LeRayBookingSystem.Controllers
             if (ModelState.IsValid)
             {
                 promo.CreatedAt = DateTime.Now;
-
-                // ✅ Auto-assign logged-in user as creator
                 promo.CreatedBy = _userManager.GetUserId(User);
 
-                // ✅ Ensure PromoCode exists
                 if (string.IsNullOrWhiteSpace(promo.PromoCode))
                     promo.PromoCode = GeneratePromoCode();
 
                 _context.Add(promo);
                 await _context.SaveChangesAsync();
 
+                // 🧾 Log creation
+                await _auditService.LogAsync(
+                    "Promo",
+                    "Created",
+                    promo.Id.ToString(),
+                    $"Promo '{promo.Title}' created with code {promo.PromoCode}."
+                );
+
                 return RedirectToAction(nameof(Index));
             }
-
             return View(promo);
         }
 
-        // GET: Promos/Edit/5
+        // ✅ EDIT (GET)
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null) return NotFound();
+            if (id == null)
+                return NotFound();
 
             var promo = await _context.Promos.FindAsync(id);
-            if (promo == null) return NotFound();
+            if (promo == null)
+                return NotFound();
 
             return View(promo);
         }
 
-        // POST: Promos/Edit/5
+        // ✅ EDIT (POST) — with Audit Log
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Price,PromoCode,StartDate,EndDate,IsActive,CreatedBy,CreatedAt")] Promos promo)
         {
-            if (id != promo.Id) return NotFound();
+            if (id != promo.Id)
+                return NotFound();
 
             if (ModelState.IsValid)
             {
@@ -107,6 +119,14 @@ namespace LeRayBookingSystem.Controllers
                 {
                     _context.Update(promo);
                     await _context.SaveChangesAsync();
+
+                    // 🧾 Log update
+                    await _auditService.LogAsync(
+                        "Promo",
+                        "Updated",
+                        promo.Id.ToString(),
+                        $"Promo '{promo.Title}' updated (Active: {promo.IsActive})."
+                    );
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -120,21 +140,23 @@ namespace LeRayBookingSystem.Controllers
             return View(promo);
         }
 
-        // GET: Promos/Delete/5
+        // ✅ DELETE (GET)
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null) return NotFound();
+            if (id == null)
+                return NotFound();
 
             var promo = await _context.Promos
                 .Include(p => p.CreatedByUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (promo == null) return NotFound();
+            if (promo == null)
+                return NotFound();
 
             return View(promo);
         }
 
-        // POST: Promos/Delete/5
+        // ✅ DELETE (POST) — with Audit Log
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -144,7 +166,16 @@ namespace LeRayBookingSystem.Controllers
             {
                 _context.Promos.Remove(promo);
                 await _context.SaveChangesAsync();
+
+                // 🧾 Log deletion
+                await _auditService.LogAsync(
+                    "Promo",
+                    "Deleted",
+                    id.ToString(),
+                    $"Promo '{promo.Title}' deleted from system."
+                );
             }
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -153,7 +184,7 @@ namespace LeRayBookingSystem.Controllers
             return _context.Promos.Any(e => e.Id == id);
         }
 
-        // ✅ Helper: Generate 4-character random promo code with "LeRay-" prefix
+        // ✅ Helper: Generate unique promo code
         private string GeneratePromoCode()
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -162,6 +193,5 @@ namespace LeRayBookingSystem.Controllers
                 .Select(s => s[random.Next(s.Length)]).ToArray());
             return $"LeRay-{suffix}";
         }
-
     }
 }

@@ -9,7 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // ✅ Register Email Service
 builder.Services.AddScoped<IEmailService, EmailService>();
-
+// ✅ Register Audit Log Service
+builder.Services.AddScoped<AuditLogService>();
+builder.Services.AddHttpContextAccessor();
 // Add services
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages(); // 👈 required for Identity pages
