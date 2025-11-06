@@ -1,0 +1,588 @@
+@model LeRayBookingSystem.Models.DTOs.CreateBookingDto
+@{
+    ViewData["Title"] = "Book an Appointment";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="~/css/Booking.css" asp-append-version="true" />
+}
+
+<div class="booking-wrapper"> @* New wrapper for centering *@
+    <div class="booking-container">
+        <aside class="sidebar">
+            <ul class="steps">
+                <li class="active" data-step="1">Service Selection</li>
+                <li data-step="2">Date & Time</li>
+                <li data-step="3">Confirmation</li>
+                <li data-step="4">Payment</li>
+            </ul>
+        </aside>
+    
+        <form asp-controller="Booking" asp-action="ConfirmBooking" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+    
+            <main class="main-content step active" data-step="1">
+                <h2>Service Selection</h2>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    
+                <div class="service-selection-header">
+                    <label for="service-select">*Service:</label>
+                    <select id="service-select">
+                        <option value="">Filter by Category</option>
+                        <option value="facial">Facial</option>
+                        <option value="laser-treatment">Laser Treatment</option>
+                        <option value="skin-treatment">Skin Treatment</option>
+                        <option value="shr-ipl">SHR/IPL (Laser Hair Removal)</option>
+                        <option value="whitening">Whitening / Anti-Aging</option>
+                        <option value="semi-permanent">Semi-Permanent Make-Up</option>
+                        <option value="slimming">Slimming</option>
+                        <option value="microneedling">Microneedling</option>
+                        <option value="eyelash-extension">Eyelash Extension</option>
+                        <option value="nail-care">Nail Care Services</option>
+                        <option value="spa-services">SPA Services</option>
+                    </select>
+                </div>
+    
+                <div class="service-grid">
+                    <div class="category-list">
+                        <div class="category-list-header">Select Bundles/Categories</div>
+                        <div class="category-items">
+                            <div class="category-checkbox-item" data-category="laser-treatment">
+                                <input type="checkbox" id="cat-laser" data-category="laser-treatment">
+                                <label for="cat-laser">BUNDLE (LASER)</label>
+                            </div>
+                            
+                            <div class="category-checkbox-item" data-category="facial">
+                                <input type="checkbox" id="cat-facial" data-category="facial">
+                                <label for="cat-facial">BUNDLE (FACIAL)</label>
+                            </div>
+                            
+                            <div class="category-checkbox-item" data-category="skin-treatment">
+                                <input type="checkbox" id="cat-skin" data-category="skin-treatment">
+                                <label for="cat-skin">SKIN TREATMENT</label>
+                            </div>
+                            
+                            <div class="category-checkbox-item" data-category="shr-ipl">
+                                <input type="checkbox" id="cat-shr" data-category="shr-ipl">
+                                <label for="cat-shr">SHR/IPL (LASER HAIR REMOVAL)</label>
+                            </div>
+                            
+                            <div class="category-checkbox-item" data-category="whitening">
+                                <input type="checkbox" id="cat-whitening" data-category="whitening">
+                                <label for="cat-whitening">WHITENING/ANTI-AGING</label>
+                            </div>
+    
+                            <div class="category-checkbox-item" data-category="slimming">
+                                <input type="checkbox" id="cat-slimming" data-category="slimming">
+                                <label for="cat-slimming">SLIMMING</label>
+                            </div>
+    
+                            <div class="category-checkbox-item" data-category="microneedling">
+                                <input type="checkbox" id="cat-microneedling" data-category="microneedling">
+                                <label for="cat-microneedling">MICRONEEDLING</label>
+                            </div>
+    
+                            <div class="category-checkbox-item" data-category="semi-permanent">
+                                <input type="checkbox" id="cat-semiperm" data-category="semi-permanent">
+                                <label for="cat-semiperm">SEMI-PERMANENT MAKE-UP</label>
+                            </div>
+    
+                            <div class="category-checkbox-item" data-category="eyelash-extension">
+                                <input type="checkbox" id="cat-eyelash" data-category="eyelash-extension">
+                                <label for="cat-eyelash">EYELASH EXTENSION</label>
+                            </div>
+    
+                            <div class="category-checkbox-item" data-category="nail-care">
+                                <input type="checkbox" id="cat-nails" data-category="nail-care">
+                                <label for="cat-nails">NAIL CARE SERVICES</label>
+                            </div>
+    
+                            <div class="category-checkbox-item" data-category="spa-services">
+                                <input type="checkbox" id="cat-spa" data-category="spa-services">
+                                <label for="cat-spa">SPA SERVICES</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="bundle-display">
+                        <div class="bundle-display-header">Selected Bundle Summary</div>
+                        <ul id="bundle-list" class="bundle-list">
+                            <li class="empty-message">No services selected</li>
+                        </ul>
+                    </div>
+                </div>
+    
+                <div class="service-detail-container">
+                    
+                    <div class="service-category" id="category-facial" data-category="facial">
+                        <h3>Facial Services</h3>
+                        <div class="service-items">
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Basic Facial" data-price="899" id="service-1">
+                                <label for="service-1">Basic Facial – ₱899</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Acne Facial" data-price="999" id="service-2">
+                                <label for="service-2">Acne Facial – ₱999</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="LeRay Signature Facial" data-price="2499" id="service-3">
+                                <label for="service-3">LeRay Signature Facial – ₱2499</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="LeRay Diamond Facial" data-price="1999" id="service-4">
+                                <label for="service-4">LeRay Diamond Facial – ₱1999</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="LeRay Hydra Facial" data-price="1999" id="service-5">
+                                <label for="service-5">LeRay Hydra Facial – ₱1999</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Acne Shot Treatment" data-price="100" id="service-6">
+                                <label for="service-6">Acne Shot Treatment – ₱100/shot</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="PDT Light Treatment" data-price="499" id="service-7">
+                                <label for="service-7">PDT Light Treatment – ₱499</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Gold Mask Treatment" data-price="499" id="service-8">
+                                <label for="service-8">Gold Mask Treatment – ₱499</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="service-category" id="category-laser-treatment" data-category="laser-treatment">
+                        <h3>Laser Treatment Services</h3>
+                        <div class="service-items">
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="CO2 Fractional Laser" data-price="2500" id="service-l1">
+                                <label for="service-l1">CO2 Fractional Laser – ₱2500</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Stretchmarks Removal" data-price="1799" id="service-l2">
+                                <label for="service-l2">Stretchmarks Removal – ₱1799</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Scar Removal" data-price="1599" id="service-l3">
+                                <label for="service-l3">Scar Removal – ₱1599</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Keloid Scar Removal" data-price="1599" id="service-l4">
+                                <label for="service-l4">Keloid Scar Removal – ₱1599</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Pimple Marks Removal" data-price="1599" id="service-l5">
+                                <label for="service-l5">Pimple Marks Removal – ₱1599</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Pico Laser" data-price="1799" id="service-l6">
+                                <label for="service-l6">Pico Laser – ₱1799</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Carbon Laser" data-price="1599" id="service-l7">
+                                <label for="service-l7">Carbon Laser – ₱1599</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Melasma Removal" data-price="1599" id="service-l8">
+                                <label for="service-l8">Melasma Removal – ₱1599</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Tattoo Removal" data-price="1599" id="service-l9">
+                                <label for="service-l9">Tattoo Removal – ₱1599</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="service-category" id="category-skin-treatment" data-category="skin-treatment">
+                        <h3>Skin Treatment Services</h3>
+                        <div class="service-items">
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Milia Removal" data-price="799" id="service-s1">
+                                <label for="service-s1">Milia Removal – ₱799</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Syringoma Removal" data-price="999" id="service-s2">
+                                <label for="service-s2">Syringoma Removal – ₱999</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Skin Tag Removal" data-price="599" id="service-s3">
+                                <label for="service-s3">Skin Tag Removal – ₱599</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Warts Removal" data-price="999" id="service-s4">
+                                <label for="service-s4">Warts Removal – ₱999</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="service-category" id="category-shr-ipl" data-category="shr-ipl">
+                        <h3>SHR/IPL (Laser Hair Removal) Services</h3>
+                        <div class="service-items">
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Upper Lip SHR" data-price="600" id="service-sh1">
+                                <label for="service-sh1">Upper Lip – ₱600</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Lower Lip SHR" data-price="500" id="service-sh2">
+                                <label for="service-sh2">Lower Lip – ₱500</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Underarm SHR" data-price="699" id="service-sh3">
+                                <label for="service-sh3">Underarm – ₱699</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Bikini Area SHR" data-price="899" id="service-sh4">
+                                <label for="service-sh4">Bikini Area – ₱899</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Face SHR" data-price="950" id="service-sh5">
+                                <label for="service-sh5">Face – ₱950</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Lower Legs SHR" data-price="1499" id="service-sh6">
+                                <label for="service-sh6">Lower Legs – ₱1499</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Full Legs SHR" data-price="2499" id="service-sh7">
+                                <label for="service-sh7">Full Legs – ₱2499</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="service-category" id="category-whitening" data-category="whitening">
+                        <h3>Whitening/Anti-Aging Services</h3>
+                        <div class="service-items">
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Gluta Single Dose" data-price="950" id="service-w1">
+                                <label for="service-w1">Gluta Single Dose – ₱950</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Gluta Double Dose" data-price="1499" id="service-w2">
+                                <label for="service-w2">Gluta Double Dose – ₱1499</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="LeRay Signature Gluta" data-price="2599" id="service-w3">
+                                <label for="service-w3">LeRay Signature Gluta – ₱2599</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="LeRay Slimming Drip" data-price="1599" id="service-w4">
+                                <label for="service-w4">LeRay Slimming Drip – ₱1599</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="LeRay Glow Drip" data-price="1799" id="service-w5">
+                                <label for="service-w5">LeRay Glow Drip – ₱1799</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Cinderella Set" data-price="1999" id="service-w6">
+                                <label for="service-w6">Cinderella Set – ₱1999</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Placenta Shot" data-price="999" id="service-w7">
+                                <label for="service-w7">Placenta Shot – ₱999</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Stemcell Shot" data-price="999" id="service-w8">
+                                <label for="service-w8">Stemcell Shot – ₱999</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="L-Carnitine Shot" data-price="999" id="service-w9">
+                                <label for="service-w9">L-Carnitine Shot – ₱999</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="service-category" id="category-slimming" data-category="slimming">
+                        <h3>Slimming Services</h3>
+                        <div class="service-items">
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Lipo Cavitation" data-price="600" id="service-sl1">
+                                <label for="service-sl1">Lipo Cavitation – ₱600/session</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="RF Face Contouring" data-price="499" id="service-sl2">
+                                <label for="service-sl2">RF Face Contouring – ₱499/session</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="RF Arms/Thighs" data-price="550" id="service-sl3">
+                                <label for="service-sl3">RF Arms/Thighs – ₱550/session</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="RF Tummy" data-price="550" id="service-sl4">
+                                <label for="service-sl4">RF Tummy – ₱550/session</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Mesotherapy" data-price="2500" id="service-sl5">
+                                <label for="service-sl5">Mesotherapy – starts at ₱2500</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Barbie Arms" data-price="1999" id="service-sl6">
+                                <label for="service-sl6">Barbie Arms – starts at ₱1999</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="service-category" id="category-microneedling" data-category="microneedling">
+                        <h3>Microneedling Services</h3>
+                        <div class="service-items">
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="LeRay Micro-Bright" data-price="1199" id="service-m1">
+                                <label for="service-m1">LeRay Micro-Bright – ₱1199</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="LeRay Micro-Regenerate" data-price="1299" id="service-m2">
+                                <label for="service-m2">LeRay Micro-Regenerate – ₱1299</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="LeRay Micro-Moisture" data-price="1299" id="service-m3">
+                                <label for="service-m3">LeRay Micro-Moisture – ₱1299</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="LeRay Micro-Acne" data-price="1399" id="service-m4">
+                                <label for="service-m4">LeRay Micro-Acne – ₱1399</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="LeRay Micro-Whitening" data-price="1399" id="service-m5">
+                                <label for="service-m5">LeRay Micro-Whitening – ₱1399</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="service-category" id="category-semi-permanent" data-category="semi-permanent">
+                        <h3>Semi-Permanent Make-Up Services</h3>
+                        <div class="service-items">
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="BB Glow (Face)" data-price="1599" id="service-sp1">
+                                <label for="service-sp1">BB Glow (Face) – ₱1599</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="BB Glow (Face and Neck)" data-price="1999" id="service-sp2">
+                                <label for="service-sp2">BB Glow (Face and Neck) – ₱1999</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="BB Lips" data-price="1699" id="service-sp3">
+                                <label for="service-sp3">BB Lips – ₱1699</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Full Face Package" data-price="4199" id="service-sp4">
+                                <label for="service-sp4">Full Face Package – ₱4199</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="service-category" id="category-eyelash-extension" data-category="eyelash-extension">
+                        <h3>Eyelash Extension Services</h3>
+                        <div class="service-items">
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Classic Look" data-price="699" id="service-e1">
+                                <label for="service-e1">Classic Look – ₱699</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Open Eye Look" data-price="899" id="service-e2">
+                                <label for="service-e2">Open Eye Look – ₱899</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Cat Eye Look" data-price="899" id="service-e3">
+                                <label for="service-e3">Cat Eye Look – ₱899</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Babydoll Look" data-price="999" id="service-e4">
+                                <label for="service-e4">Babydoll Look – ₱999</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Squirrel Look" data-price="899" id="service-e5">
+                                <label for="service-e5">Squirrel Look – ₱899</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Volume Lash Add" data-price="150" id="service-e6">
+                                <label for="service-e6">Volume Lash Add – ₱150</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Mega Volume Lash Add" data-price="250" id="service-e7">
+                                <label for="service-e7">Mega Volume Lash Add – ₱250</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Korean Lash Lift" data-price="499" id="service-e8">
+                                <label for="service-e8">Korean Lash Lift – ₱499</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Removal" data-price="250" id="service-e9">
+                                <label for="service-e9">Removal – ₱250</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="service-category" id="category-nail-care" data-category="nail-care">
+                        <h3>Nail Care Services</h3>
+                        <div class="service-items">
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Regular Manicure" data-price="190" id="service-n1">
+                                <label for="service-n1">Regular Manicure – ₱190</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Regular Pedicure" data-price="200" id="service-n2">
+                                <label for="service-n2">Regular Pedicure – ₱200</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Regular Mani & Pedi" data-price="350" id="service-n3">
+                                <label for="service-n3">Mani & Pedi – ₱350</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Gel Manicure" data-price="450" id="service-n4">
+                                <label for="service-n4">Gel Manicure – ₱450</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Gel Pedicure" data-price="480" id="service-n5">
+                                <label for="service-n5">Gel Pedicure – ₱480</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Gel Mani & Pedi" data-price="850" id="service-n6">
+                                <label for="service-n6">Gel Mani & Pedi – ₱850</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Softgel/Polygel Builder" data-price="999" id="service-n7">
+                                <label for="service-n7">Softgel/Polygel Builder – ₱999</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Soft Gel Tips Extensions" data-price="1199" id="service-n8">
+                                <label for="service-n8">Soft Gel Tips Extensions – ₱1199</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="service-category" id="category-spa-services" data-category="spa-services">
+                        <h3>SPA Services</h3>
+                        <div class="service-items">
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Foot Spa" data-price="380" id="service-spa1">
+                                <label for="service-spa1">Foot Spa – ₱380</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Foot Spa with Pedicure" data-price="500" id="service-spa2">
+                                <label for="service-spa2">Foot Spa with Pedicure – ₱500</label>
+                            </div>
+                            <div class="service-item">
+                                <input type="checkbox" name="services[]" value="Mani & Pedi and Foot Spa" data-price="650" id="service-spa3">
+                                <label for="service-spa3">Mani & Pedi and Foot Spa – ₱650</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+    
+                <input type="hidden" id="booking-service-id" asp-for="ServiceId" />
+                <input type="hidden" id="booking-total-price" asp-for="TotalPrice" />
+                <input type="hidden" id="booking-notes" asp-for="Notes" />
+                
+                <div class="nav-buttons">
+                    <button type="button" class="btn continue-btn" id="continue1">Continue</button>
+                </div>
+            </main>
+    
+            <main class="main-content step" data-step="2">
+                <h2>Date & Time</h2>
+    
+                <div class="time-layout">
+                    <div class="calendar-box">
+                        <label for="date-picker"><strong>*Select Date:</strong></label>
+                        <input type="text" id="date-picker" placeholder="Click to select date" />
+                    </div>
+                    <div class="timeslot-box">
+                        <h3>Available Time Slots</h3>
+                        <div class="timeslots">
+                            <button type="button">11:00 AM - 12:00 PM</button>
+                            <button type="button">11:30 AM - 12:30 PM</button>
+                            <button type="button">12:00 PM - 1:00 PM</button>
+                            <button type="button">12:30 PM - 1:30 PM</button>
+                            <button type="button">1:00 PM - 2:00 PM</button>
+                            <button type="button">1:30 PM - 2:30 PM</button>
+                            <button type="button">2:00 PM - 3:00 PM</button>
+                            <button type="button">2:30 PM - 3:30 PM</button>
+                            <button type="button">3:00 PM - 4:00 PM</button>
+                            <button type="button">4:00 PM - 5:00 PM</button>
+                            <button type="button">5:00 PM - 6:00 PM</button>
+                            <button type="button">6:00 PM - 7:00 PM</button>
+                            <button type="button">7:00 PM - 8:00 PM</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <input type="hidden" id="booking-date-string" asp-for="AppointmentDateString" />
+                <input type="hidden" id="booking-time-slot-string" asp-for="TimeSlotString" />
+    
+                <div class="nav-buttons">
+                    <button type="button" class="btn back-btn" id="back2">Back</button>
+                    <button type="button" class="btn continue-btn" id="continue2">Continue</button>
+                </div>
+            </main>
+    
+            <main class="main-content step" data-step="3">
+                <h2>Confirmation</h2>
+                <div class="confirmation-card">
+                    <div class="confirmation-header">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3159/3159066.png" alt="confetti" class="confetti-icon" />
+                        <h3>Congratulations</h3>
+                        <p>Appointment ID # (Generated on successful server booking)</p>
+                    </div>
+    
+                    <div class="confirmation-body">
+                        <p><strong>Service:</strong> <span id="confirm-service">N/A</span></p>
+                        <p><strong>Date:</strong> <span id="confirm-date">N/A</span></p>
+                        <p><strong>Time:</strong> <span id="confirm-time">N/A</span></p>
+                        <p><strong>Location:</strong> 999 JP Rizal Street, Concepcion Uno, Marikina City</p>
+                        <p><strong>Price:</strong> <span id="confirm-price">Php N/A</span></p>
+                        <p><strong>Down payment:</strong> <span id="confirm-downpayment">Php N/A</span></p>
+                        <hr />
+                        <p class="note">Note: Downpayment is 20% of the total service amount. The remaining balance will be settled on the appointment day.</p>
+                    </div>
+                </div>
+    
+                 <div class="nav-buttons">
+                    <button type="button" class="btn back-btn" id="back3">Back</button>
+                    <button type="button" class="btn continue-btn" id="continue3">Continue</button>
+                 </div>
+            </main>
+    
+            <main class="main-content step" data-step="4">
+                <h2>Payment</h2>
+                <div class="payment-container">
+                    <p>Upload a clear photo or screenshot of your payment receipt.</p>
+    
+                    <div class="payment-details">
+                        <p><strong>Date:</strong> <span id="payment-date">—</span></p>
+                        <p><strong>Time:</strong> <span id="payment-time">—</span></p>
+                        <p><strong>Service:</strong> <span id="payment-service">—</span></p>
+                        <p><strong>Location:</strong> 999 JP Rizal Street, Concepcion Uno, Marikina City</p>
+                        <p><strong>Price:</strong> <span id="payment-final-price">Php N/A</span></p>
+                        <p><strong>Down payment:</strong> <span id="payment-final-downpayment">Php N/A</span></p>
+                        <p class="note">Please pay the 20% downpayment via GCash or PayMaya.</p>
+                    </div>
+    
+                    <div class="payment-info">
+                        <p><strong>GCash:</strong> 0912-345-6789 (LeRay)</p>
+                        <p><strong>PayMaya:</strong> 0998-765-4321 (LeRay)</p>
+                    </div>
+    
+                    <div class="upload-section">
+                        <label for="receipt" class="upload-btn">Upload Receipt</label>
+                        <input type="file" id="receipt" asp-for="PaymentReceiptFile" accept=".jpg,.jpeg,.png" hidden required />
+                        <p class="file-note">Only .jpg, .jpeg, .png files | Max 5MB</p>
+                        <span asp-validation-for="PaymentReceiptFile" class="text-danger"></span>
+                    </div>
+    
+                    <div class="nav-buttons">
+                        <button type="button" class="btn back-btn" id="back4">Back</button>
+                        <button type="submit" class="btn confirm-btn" id="finish">Confirm Booking</button>
+                    </div>
+                </div>
+            </main>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="~/js/Booking.js" asp-append-version="true"></script>
+    <partial name="_ValidationScriptsPartial" />
+}
